@@ -1,21 +1,36 @@
+import { useState } from "react";
+
 function RequestForm() {
+    const [url, setUrl] = useState("");
+    const [method, setMethod] = useState("GET");
+
+    const handleSend = () => {
+        console.log({ url, method });
+    };
+
     return (
         <div>
-            <div>
+            <div style={{ marginBottom: "10px" }}>
                 <label>URL: </label>
-                <input />
+                <input 
+                    placeholder="https://api.example.com"
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)}
+                />
             </div>
 
-            <div>
+            <div style={{ marginBottom: "10px" }}>
                 <label>HTTP Method: </label>
 
-                <select>
-                    <option value="">Select a method</option>
+                <select
+                    value={method}
+                    onChange={(e) => setMethod(e.target.value)}
+                >
                     <option value="GET">GET</option>
                     <option value="POST">POST</option>
                 </select>
                 
-                <button>Send</button>
+                <button onClick={handleSend}>Send</button>
             </div>
         </div>
     );
