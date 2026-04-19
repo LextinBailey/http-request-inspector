@@ -9,9 +9,13 @@ A day-by-day log of development decisions, features, and design evolution.
     - Frontend: React (Vite)
     - Backend: Node.js + Express
 
-## Day 2 (Apr 19, 2026): RequestForm, ResponseViewer, Added RequestForm State
+## Day 2 (Apr 19, 2026): RequestForm, ResponseViewer, Added RequestForm State, Moved State
 
 - Added a static RequestForm and ResponseViewer
 - Added state to RequestForm
     - Accept user input for url and method
     - Send data to console
+- Moved state to `App.jsx`
+    - App owns data
+    - State passed down to RequestForm
+    - RequestForm receives props

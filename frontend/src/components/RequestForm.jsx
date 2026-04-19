@@ -1,9 +1,4 @@
-import { useState } from "react";
-
-function RequestForm() {
-    const [url, setUrl] = useState("");
-    const [method, setMethod] = useState("GET");
-
+function RequestForm({ url, setUrl, method, setMethod }) {
     const handleSend = () => {
         console.log({ url, method });
     };
