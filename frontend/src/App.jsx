@@ -1,6 +1,13 @@
+import RequestForm from "./components/RequestForm";
+import ResponseViewer from "./components/ResponseViewer";
+
 function App() {
   return (
-    <h1>HTTP Request Inspector</h1>
+    <div>
+      <h1>HTTP Request Inspector</h1>
+      <RequestForm />
+      <ResponseViewer />
+    </div>
   );
 }
 

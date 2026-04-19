@@ -8,3 +8,7 @@ A day-by-day log of development decisions, features, and design evolution.
 - Initial setup:
     - Frontend: React (Vite)
     - Backend: Node.js + Express
+
+## Day 2 (Apr 19, 2026): RequestForm, ResponseViewer
+
+- Added a static RequestForm and ResponseViewer
