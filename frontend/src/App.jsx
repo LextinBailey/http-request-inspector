@@ -6,9 +6,19 @@ import ResponseViewer from "./components/ResponseViewer";
 function App() {
   const [url, setUrl] = useState("");
   const [method, setMethod] = useState("GET");
+  const [response, setResponse] = useState(null);
 
   const handleSend = () => {
-        console.log({ url, method });
+        const fakeResponse = {
+          status: "200 OK",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: "...",
+          time: 123
+        }
+
+        setResponse(fakeResponse);
     };
 
   return (
@@ -21,7 +31,9 @@ function App() {
         setMethod={setMethod}
         onSend={handleSend}
       />
-      <ResponseViewer />
+      <ResponseViewer 
+        response={response}
+      />
     </div>
   );
 }

@@ -9,7 +9,7 @@ A day-by-day log of development decisions, features, and design evolution.
     - Frontend: React (Vite)
     - Backend: Node.js + Express
 
-## Day 2 (Apr 19, 2026): RequestForm, ResponseViewer, Added RequestForm State, Moved State, Moved Send
+## Day 2 (Apr 19, 2026): RequestForm, ResponseViewer, Added RequestForm State, Moved State, Moved Send, Fake Response
 
 - Added a static RequestForm and ResponseViewer
 - Added state to RequestForm
@@ -20,3 +20,8 @@ A day-by-day log of development decisions, features, and design evolution.
     - State passed down to RequestForm
     - RequestForm receives props
 - App now handles send when RequestForm calls `onSend()`
+- Simulated a fake response when send is clicked
+    - `handleSend()` runs
+    - response state set
+    - UI re-renders
+    - ResponseViewer shows data

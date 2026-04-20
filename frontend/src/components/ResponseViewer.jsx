@@ -1,17 +1,24 @@
-function ResponseViewer() {
+function ResponseViewer({ response }) {
+    if (!response) {
+        return <div>No response yet</div>;
+    }
+
    return (
     <div>
-        <div>Status: 200 OK</div>
+        <div>Status: {response.status}</div>
 
         <div>
             <strong>Headers:</strong>
-            <div>Date: ...</div>
-            <div>Content-Type: ...</div>
+            {Object.entries(response.headers).map(([key, value]) => (
+                <div key={key}>
+                    {key}: {value}
+                </div>
+            ))}
         </div>
 
         <div>
             <strong>Body:</strong>
-            <div>message: ok</div>
+            <div>{response.body}</div>
         </div>
     </div>
    )
