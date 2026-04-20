@@ -1,8 +1,4 @@
-function RequestForm({ url, setUrl, method, setMethod }) {
-    const handleSend = () => {
-        console.log({ url, method });
-    };
-
+function RequestForm({ url, setUrl, method, setMethod, onSend }) {
     return (
         <div>
             <div style={{ marginBottom: "10px" }}>
@@ -25,7 +21,7 @@ function RequestForm({ url, setUrl, method, setMethod }) {
                     <option value="POST">POST</option>
                 </select>
                 
-                <button onClick={handleSend}>Send</button>
+                <button onClick={onSend}>Send</button>
             </div>
         </div>
     );
