@@ -27,3 +27,7 @@ A day-by-day log of development decisions, features, and design evolution.
     - ResponseViewer shows data
 - Simulated network delay and async behavior
 - Simulated failure and error handling
+
+## Day 3 (Apr 20, 2026): README Filled Out
+
+- Updated README with current status and understanding of internals
