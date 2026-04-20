@@ -1,4 +1,12 @@
-function ResponseViewer({ response }) {
+function ResponseViewer({ response, loading, error }) {
+    if (loading) {
+        return <div>Sending request...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
     if (!response) {
         return <div>No response yet</div>;
     }

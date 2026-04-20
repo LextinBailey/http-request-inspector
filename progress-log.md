@@ -9,7 +9,7 @@ A day-by-day log of development decisions, features, and design evolution.
     - Frontend: React (Vite)
     - Backend: Node.js + Express
 
-## Day 2 (Apr 19, 2026): RequestForm, ResponseViewer, Added RequestForm State, Moved State, Moved Send, Fake Response
+## Day 2 (Apr 19, 2026): RequestForm, ResponseViewer, Added RequestForm State, Moved State, Moved Send, Fake Response, Loading, Error Handling
 
 - Added a static RequestForm and ResponseViewer
 - Added state to RequestForm
@@ -25,3 +25,5 @@ A day-by-day log of development decisions, features, and design evolution.
     - response state set
     - UI re-renders
     - ResponseViewer shows data
+- Simulated network delay and async behavior
+- Simulated failure and error handling

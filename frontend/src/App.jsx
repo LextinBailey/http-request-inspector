@@ -7,6 +7,8 @@ function App() {
   const [url, setUrl] = useState("");
   const [method, setMethod] = useState("GET");
   const [response, setResponse] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleSend = () => {
         const fakeResponse = {
@@ -18,7 +20,20 @@ function App() {
           time: 123
         }
 
-        setResponse(fakeResponse);
+        const shouldFail = Math.random() < 0.3;
+
+        setLoading(true);
+
+        setTimeout(() => {
+          if (shouldFail) {
+            setError("Request failed");
+            setResponse(null);
+          } else if (!shouldFail) {
+            setError(null);
+            setResponse(fakeResponse);
+          }
+          setLoading(false);
+        }, 1000);
     };
 
   return (
@@ -33,6 +48,8 @@ function App() {
       />
       <ResponseViewer 
         response={response}
+        loading={loading}
+        error={error}
       />
     </div>
   );
