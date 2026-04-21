@@ -30,4 +30,12 @@ A day-by-day log of development decisions, features, and design evolution.
 
 ## Day 3 (Apr 20, 2026): README Filled Out
 
-- Updated README with current status and understanding of internals
+- Updated README with current progress and understanding of internals
+
+## Day 4 (Apr 21, 2026): JSON Parsing, Receiving Request Data
+
+- Enabled JSON parsing
+    - Incoming JSON gets turned into a JavaScript object
+- Server receives request data
+    - Logs incoming JSON
+    - Sends back "Received"

@@ -28,7 +28,9 @@ This project was built to strengthen my understanding of:
 - [x] Loading state handling
 - [x] Error state handling
 - [x] Conditional rendering based on state
-- [x] Dynamic rendering of response date (headers, body, status)
+- [x] Dynamic rendering of response data (headers, body, status)
+- [x] JSON parsing
+- [x] Receives request data
 
 ## ⚙️ How It Works Internally
 
@@ -98,6 +100,16 @@ Response headers are stored as an object and rendered dynamically using:
 `Object.entries(headers).map(...)`
 
 This converts key-value pairs into UI elements.
+
+### 8. JSON Parsing
+
+`server.js` converts incoming JSON into a JavaScript object.
+
+### 9. Receiving Requests
+
+When `/request` route is hit:
+- JSON is logged
+- Sends back "Received"
 
 ## 📁 Project Structure
 
