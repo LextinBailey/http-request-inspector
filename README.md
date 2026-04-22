@@ -4,9 +4,7 @@ A Postman-like tool that allows users to create HTTP requests and inspect respon
 
 ## 📝 Overview
 
-HTTP Request Inspector is a full-stack application that allows users to build HTTP requests and view structured responses.
-
-The current version simulates the full request lifecycle, including loading and error states, to model real-world frontend-backend interactions.
+HTTP Request Inspector is a full-stack application that allows users to build HTTP requests and inspect real responses from external APIs.
 
 This project was built to strengthen my understanding of:
 - React component architecture
@@ -24,13 +22,19 @@ This project was built to strengthen my understanding of:
 
 - [x] Controlled form inputs (URL + method)
 - [x] Component-based UI structure
-- [x] Simulated HTTP request lifecycle
 - [x] Loading state handling
 - [x] Error state handling
 - [x] Conditional rendering based on state
 - [x] Dynamic rendering of response data (headers, body, status)
-- [x] JSON parsing
-- [x] Receives request data
+- [x] Parses JSON responses from backend
+- [x] Backend receives request configuration (URL + method)
+- [x] `POST /request` endpoint
+- [x] Performs HTTP request (`fetch`)
+- [x] Cross-origin requests (`CORS`)
+
+### 👨‍💻 Developer Experience
+
+- [x] Backend logging (incoming requests, fetch errors)
 
 ## ⚙️ How It Works Internally
 
@@ -73,16 +77,28 @@ This ensures the UI always reflects the current application state.
 3. `RequestForm` calls the `onSend` function passed from `App`
 4. `App` handles the request logic
 
-### 5. Simulated Request Lifecycle
+### 5. Request Lifecycle
 
-To model real-world behavior, the app simulates an HTTP request:
+Frontend:
 - `loading` is set to `true`
-- A delay is introduced using `setTimeout`
-- A mock response is generated
-- `response` is updated
-- `loading` is set to `false`
+- Errors are cleared
+- Sends a request to the backend server (`fetch("http://localhost:3000/request")`)
 
-Randomized failures are introduced to simulate error handling
+Backend:
+- Extracts data from the request (`url`, `method`)
+- Starts a timer
+- Sends a request to the user-provided URL (`fetch(url, { method })`)
+- Converts response into plain text
+- Calculates how long the request took
+- Sends JSON response back to frontend (`status`, `headers`, `body`, `time`)
+- Returns error response (`500`) if request fails
+- Acts as a proxy between frontend and external APIs
+
+Frontend:
+- Parses response
+- Checks `res.ok` to handle backend errors
+- Stores response in state 
+- `loading` is set to `false`
 
 ### 6. Conditional Rendering
 
@@ -92,6 +108,7 @@ Randomized failures are introduced to simulate error handling
 - If `error` -> displays error message
 - If no response -> displays placeholder
 - Otherwise -> displays response data
+- Handles missing or undefined data to prevent UI crashes
 
 ### 7. Rendering Response Data
 
@@ -100,16 +117,6 @@ Response headers are stored as an object and rendered dynamically using:
 `Object.entries(headers).map(...)`
 
 This converts key-value pairs into UI elements.
-
-### 8. JSON Parsing
-
-`server.js` converts incoming JSON into a JavaScript object.
-
-### 9. Receiving Requests
-
-When `/request` route is hit:
-- JSON is logged
-- Sends back "Received"
 
 ## 📁 Project Structure
 

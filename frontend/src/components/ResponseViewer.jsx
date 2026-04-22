@@ -17,7 +17,7 @@ function ResponseViewer({ response, loading, error }) {
 
         <div>
             <strong>Headers:</strong>
-            {Object.entries(response.headers).map(([key, value]) => (
+            {response.headers && Object.entries(response.headers).map(([key, value]) => (
                 <div key={key}>
                     {key}: {value}
                 </div>

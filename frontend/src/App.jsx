@@ -10,30 +10,32 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleSend = () => {
-        const fakeResponse = {
-          status: "200 OK",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: "...",
-          time: 123
+  const handleSend = async () => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const res = await fetch("http://localhost:3000/request", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ url, method })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error(data.error || "Request failed");
         }
 
-        const shouldFail = Math.random() < 0.3;
-
-        setLoading(true);
-
-        setTimeout(() => {
-          if (shouldFail) {
+        setResponse(data);
+        } catch(err) {
             setError("Request failed");
             setResponse(null);
-          } else if (!shouldFail) {
-            setError(null);
-            setResponse(fakeResponse);
-          }
-          setLoading(false);
-        }, 1000);
+        }
+        
+        setLoading(false);
     };
 
   return (

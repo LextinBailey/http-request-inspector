@@ -11,26 +11,26 @@ A day-by-day log of development decisions, features, and design evolution.
 
 ## Day 2 (Apr 19, 2026): RequestForm, ResponseViewer, Added RequestForm State, Moved State, Moved Send, Fake Response, Loading, Error Handling
 
-- Added a static RequestForm and ResponseViewer
-- Added state to RequestForm
-    - Accept user input for url and method
+- Added a static `RequestForm` and `ResponseViewer`
+- Added state to `RequestForm`
+    - Accept user input for `url` and `method`
     - Send data to console
 - Moved state to `App.jsx`
-    - App owns data
-    - State passed down to RequestForm
-    - RequestForm receives props
-- App now handles send when RequestForm calls `onSend()`
-- Simulated a fake response when send is clicked
+    - `App` owns data
+    - State passed down to `RequestForm`
+    - `RequestForm` receives props
+- `App` now handles `Send` when `RequestForm` calls `onSend()`
+- Simulated a fake response when `Send` is clicked
     - `handleSend()` runs
-    - response state set
+    - `response` state set
     - UI re-renders
-    - ResponseViewer shows data
+    - `ResponseViewer` shows data
 - Simulated network delay and async behavior
 - Simulated failure and error handling
 
 ## Day 3 (Apr 20, 2026): README Filled Out
 
-- Updated README with current progress and understanding of internals
+- Updated `README.md` with current progress and understanding of internals
 
 ## Day 4 (Apr 21, 2026): JSON Parsing, Receiving Request Data
 
@@ -39,3 +39,30 @@ A day-by-day log of development decisions, features, and design evolution.
 - Server receives request data
     - Logs incoming JSON
     - Sends back "Received"
+
+## Day 5 (Apr 22, 2026): Backend Endpoint, Connecting Frontend -> Backend, CORS, Frontend Error Handling, Invalid URL, Backend Logging
+
+- Implemented `POST /request` endpoint in backend
+    - Accepts `{ url, method }` from frontend
+    - Perfoms HTTP request using `fetch`
+    - Returns structured JSON
+- Connected frontend to backend using `fetch("http://localhost:3000/request")`
+    - Sends request configuration (URL + method)
+    - Awaits response
+    - Parses JSON
+    - Stores response in state and passes to `ResponseViewer`
+- Installed and enabled `CORS` in backend
+    - Allows cross-origin requests between:
+        -  Frontend: `localhost:5173`
+        -  Backend: `localhost:3000`
+- Added error handling (frontend)
+    - Wrapped request in `try/catch`
+    - Checked `res.ok` to detect backend errors
+    - Displays error message in UI
+- Added error handling (backend)
+    - Wrapped external `fetch` in `try/catch`
+    - Prevents server crashes from invalid URLs or failed requests
+- Added backend logging
+    - Incoming requests (`url`, `mehthod`)
+    - Fetch errors
+- Learned to handle mismatched frontend/backed data (e.g. missing headers causing UI crash)
