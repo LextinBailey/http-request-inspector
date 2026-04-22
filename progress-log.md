@@ -40,7 +40,7 @@ A day-by-day log of development decisions, features, and design evolution.
     - Logs incoming JSON
     - Sends back "Received"
 
-## Day 5 (Apr 22, 2026): Backend Endpoint, Connecting Frontend -> Backend, CORS, Frontend Error Handling, Invalid URL, Backend Logging
+## Day 5 (Apr 22, 2026): Backend Endpoint, Connecting Frontend -> Backend, CORS, Frontend Error Handling, Invalid URL, Backend Logging, UI Improvements
 
 - Implemented `POST /request` endpoint in backend
     - Accepts `{ url, method }` from frontend
@@ -66,3 +66,9 @@ A day-by-day log of development decisions, features, and design evolution.
     - Incoming requests (`url`, `mehthod`)
     - Fetch errors
 - Learned to handle mismatched frontend/backed data (e.g. missing headers causing UI crash)
+- Added simple UI improvements
+    - Added "pretty-print" for JSON formatting
+    - Grouped sections
+    - Added bold headers
+    - Added colored status
+    - Added response time

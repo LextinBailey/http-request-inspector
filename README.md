@@ -108,7 +108,6 @@ Frontend:
 - If `error` -> displays error message
 - If no response -> displays placeholder
 - Otherwise -> displays response data
-- Handles missing or undefined data to prevent UI crashes
 
 ### 7. Rendering Response Data
 
@@ -117,6 +116,8 @@ Response headers are stored as an object and rendered dynamically using:
 `Object.entries(headers).map(...)`
 
 This converts key-value pairs into UI elements.
+
+Handles missing or undefined data to prevent UI crashes.
 
 ## 📁 Project Structure
 
