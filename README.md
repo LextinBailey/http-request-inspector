@@ -31,6 +31,7 @@ This project was built to strengthen my understanding of:
 - [x] `POST /request` endpoint
 - [x] Performs HTTP request (`fetch`)
 - [x] Cross-origin requests (`CORS`)
+- [x] Request History (past 5 requests)
 
 ### 👨‍💻 Developer Experience
 
@@ -118,6 +119,16 @@ Response headers are stored as an object and rendered dynamically using:
 This converts key-value pairs into UI elements.
 
 Handles missing or undefined data to prevent UI crashes.
+
+### 8. Request History
+
+On component mount, a `useEffect` runs once to retrieve any saved request history from `localStorage`.
+If valid data exists, it is parsed and used to initialize the `history` state.
+
+Each time a request is successfully completed, `handleNewRequest` prepends the new request object to the `history` array while keeping only the last 5 entries.
+
+A second `useEffect` watches the `history` state and synchronizes any changes back to `localStorage`.
+This ensures persistence across page reloads.
 
 ## 📁 Project Structure
 

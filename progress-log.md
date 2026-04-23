@@ -72,3 +72,11 @@ A day-by-day log of development decisions, features, and design evolution.
     - Added bold headers
     - Added colored status
     - Added response time
+
+## Day 6 (Apr 23, 2026): Request History Logic and Display
+
+- Implemented request history (past 5 requests)
+    - Retrieves any saved request history from `localStorage`
+    - `handleNewRequest` prepends successfully completed request objects to `history`
+- Implemented request history display
+    - Displays the last 5 entries (`method`, `url`)
