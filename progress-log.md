@@ -80,3 +80,12 @@ A day-by-day log of development decisions, features, and design evolution.
     - `handleNewRequest` prepends successfully completed request objects to `history`
 - Implemented request history display
     - Displays the last 5 entries (`method`, `url`)
+
+## Day 7 (Apr 24, 2026): Populate Request
+
+- Implemented clickable request history to populate request form
+    - `populateRequest` sets (`url`, `method`) to (`item.url`, `item.method`)
+    - UX polish: cursor pointer and background change on hover
+- Learned the difference between `onClick={onSelectHistory(item)}` and `onClick{() => onSelectHistory(item)}`
+    - Passes a function reference instead of calling it
+    - Difference between executing now vs. later

@@ -31,7 +31,8 @@ This project was built to strengthen my understanding of:
 - [x] `POST /request` endpoint
 - [x] Performs HTTP request (`fetch`)
 - [x] Cross-origin requests (`CORS`)
-- [x] Request History (past 5 requests)
+- [x] Request history (past 5 requests)
+- [x] Populate request history
 
 ### 👨‍💻 Developer Experience
 
@@ -129,6 +130,13 @@ Each time a request is successfully completed, `handleNewRequest` prepends the n
 
 A second `useEffect` watches the `history` state and synchronizes any changes back to `localStorage`.
 This ensures persistence across page reloads.
+
+### 9. Populate Request
+
+When user selects a request from request history, `RequestForm` calls the `onSelectHistory` function passed from `App`.
+
+`populateRequest` updates `url` and `method` to `item.url` and `item.method`.
+
 
 ## 📁 Project Structure
 

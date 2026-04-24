@@ -1,4 +1,4 @@
-function RequestForm({ url, setUrl, method, setMethod, onSend, history }) {
+function RequestForm({ url, setUrl, method, setMethod, onSend, history, onSelectHistory }) {
     return (
         <div>
             <div style={{ marginBottom: "10px" }}>
@@ -30,8 +30,12 @@ function RequestForm({ url, setUrl, method, setMethod, onSend, history }) {
                 {history.length === 0 ? (
                     <p>No requests yet</p>
                 ) : (
-                    history.map((item, index) => (
-                        <div key={item.timestamp} style={{ borderBottom: "1px solid #ccc", padding: "5px 0" }}>
+                    history.map((item) => (
+                        <div 
+                            key={item.timestamp}
+                            onClick={() => onSelectHistory(item)}
+                            className="history-item"
+                            style={{ borderBottom: "1px solid #ccc", padding: "5px 0" }}>
                             <span style={{ fontWeight: "bold", marginRight: "8px" }}>
                                 {item.method}
                             </span>
