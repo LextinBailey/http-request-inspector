@@ -81,7 +81,7 @@ A day-by-day log of development decisions, features, and design evolution.
 - Implemented request history display
     - Displays the last 5 entries (`method`, `url`)
 
-## Day 7 (Apr 24, 2026): Populate Request, Selected History, Status and Time
+## Day 7 (Apr 24, 2026): Populate Request, Selected History, Status and Time, URL Overflow
 
 - Implemented clickable request history to populate request form
     - `populateRequest` sets (`url`, `method`) to (`item.url`, `item.method`)
@@ -99,3 +99,5 @@ A day-by-day log of development decisions, features, and design evolution.
     - Request logic
     - UI interaction logic
 - Added `item.status` and `item.time` to request history
+- Added handling for URL overflow
+    - Used Flexbox layout system

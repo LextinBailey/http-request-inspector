@@ -35,13 +35,26 @@ function RequestForm({ url, setUrl, method, setMethod, onSend, history, onSelect
                             key={item.timestamp}
                             onClick={() => onSelectHistory(item)}
                             className={`history-item ${selectedHistory === item.timestamp ? "active" : ""}`}
-                            style={{ borderBottom: "1px solid #ccc", padding: "5px 0" }}>
-                            <span style={{ fontWeight: "bold", marginRight: "8px" }}>
+                            style={{ 
+                                borderBottom: "1px solid #ccc", 
+                                padding: "5px 0",
+                                display: "flex",
+                                gap: "8px"
+                            }}>
+                            <span style={{ fontWeight: "bold", flexShrink: 0 }}>
                                 {item.method}
                             </span>
-                            <span>{item.url}</span>
-                            <span style={{ marginLeft: "8px", color: "#666" }}>
-                                {item.status} • {item.time}ms
+                            <span style={{
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                                flex: 1
+                            }}>{item.url}</span>
+                            <span style={{ marginLeft: "8px", color: "#666", color: item.status >= 200 && item.status < 300 ? "green" : "red" }}>
+                                {item.status}
+                            </span>
+                            <span>
+                                • {item.time}ms
                             </span>
                         </div>
                     ))
