@@ -1,4 +1,4 @@
-function RequestForm({ url, setUrl, method, setMethod, onSend, history, onSelectHistory }) {
+function RequestForm({ url, setUrl, method, setMethod, onSend, history, onSelectHistory, selectedHistory }) {
     return (
         <div>
             <div style={{ marginBottom: "10px" }}>
@@ -34,7 +34,7 @@ function RequestForm({ url, setUrl, method, setMethod, onSend, history, onSelect
                         <div 
                             key={item.timestamp}
                             onClick={() => onSelectHistory(item)}
-                            className="history-item"
+                            className={`history-item ${selectedHistory === item.timestamp ? "active" : ""}`}
                             style={{ borderBottom: "1px solid #ccc", padding: "5px 0" }}>
                             <span style={{ fontWeight: "bold", marginRight: "8px" }}>
                                 {item.method}

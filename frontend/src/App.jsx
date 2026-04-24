@@ -12,6 +12,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [history, setHistory] = useState([]);
+  const [selectedHistory, setSelectedHistory] = useState(null);
 
   useEffect(() => {
     try {
@@ -30,13 +31,6 @@ function App() {
   useEffect(() => {
     localStorage.setItem("history", JSON.stringify(history));
   }, [history]);
-
-  function handleNewRequest(requestData) {
-    setHistory(prev => {
-      const updated = [requestData, ...prev].slice(0, 5);
-      return updated;
-    });
-  }
 
   const handleSend = async () => {
     setLoading(true);
@@ -70,27 +64,46 @@ function App() {
     } catch(err) {
       setError("Request failed");
       setResponse(null);
+    } finally {
+      setLoading(false);
     }
-        
-    setLoading(false);
   };
+
+  function handleNewRequest(requestData) {
+    setHistory(prev => {
+      const updated = [requestData, ...prev].slice(0, 5);
+      return updated;
+    });
+  }
   
   const populateRequest = (item) => {
     setUrl(item.url);
     setMethod(item.method);
+    setSelectedHistory(item.timestamp);
   };
+
+  const handleUrlChange = (value) => {
+    setUrl(value);
+    setSelectedHistory(null);
+  };
+
+  const handleMethodChange = (value) => {
+    setMethod(value);
+    setSelectedHistory(null);
+  }
 
   return (
     <div>
       <h1>HTTP Request Inspector</h1>
       <RequestForm 
         url={url}
-        setUrl={setUrl}
+        setUrl={handleUrlChange}
         method={method}
-        setMethod={setMethod}
+        setMethod={handleMethodChange}
         onSend={handleSend}
         history={history}
         onSelectHistory={populateRequest}
+        selectedHistory={selectedHistory}
       />
       <ResponseViewer 
         response={response}
