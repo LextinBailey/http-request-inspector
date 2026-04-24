@@ -40,6 +40,9 @@ function RequestForm({ url, setUrl, method, setMethod, onSend, history, onSelect
                                 {item.method}
                             </span>
                             <span>{item.url}</span>
+                            <span style={{ marginLeft: "8px", color: "#666" }}>
+                                {item.status} • {item.time}ms
+                            </span>
                         </div>
                     ))
                 )}

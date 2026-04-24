@@ -81,7 +81,7 @@ A day-by-day log of development decisions, features, and design evolution.
 - Implemented request history display
     - Displays the last 5 entries (`method`, `url`)
 
-## Day 7 (Apr 24, 2026): Populate Request, Selected History
+## Day 7 (Apr 24, 2026): Populate Request, Selected History, Status and Time
 
 - Implemented clickable request history to populate request form
     - `populateRequest` sets (`url`, `method`) to (`item.url`, `item.method`)
@@ -90,7 +90,7 @@ A day-by-day log of development decisions, features, and design evolution.
     - Passes a function reference instead of calling it
     - Difference between executing now vs. later
 - Implemented selected history
-    - Selected request stays highlited until changed
+    - Selected request stays highlighted until changed
     - Any manual `url` or `method` changes clears selection
 - Created wrapper functions `handleUrlChange` and `handleMethodChange`
     - Keeps state logic centralized in `App`
@@ -98,3 +98,4 @@ A day-by-day log of development decisions, features, and design evolution.
     - Effects
     - Request logic
     - UI interaction logic
+- Added `item.status` and `item.time` to request history
