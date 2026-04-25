@@ -102,7 +102,7 @@ A day-by-day log of development decisions, features, and design evolution.
 - Added handling for URL overflow
     - Used Flexbox layout system
 
-## Day 8 (Apr 25, 2026): Header/Body Overflow
+## Day 8 (Apr 25, 2026): Header/Body Overflow, Setting Headers UI
 
 - Tested large API response (`https://dummyjson.com/products?limit=100`) and ran into major UI issue
     - Response body would disappear or get pushed off screen
@@ -120,3 +120,6 @@ A day-by-day log of development decisions, features, and design evolution.
     - Headers cannot grow infinetely
 - Added header toggle
     - Introduced collapsable headers
+- Added input fields to enter headers
+    - Not connected to backend yet
+- Added `"Add Header"` button to add a empty header

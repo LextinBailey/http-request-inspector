@@ -14,6 +14,9 @@ function App() {
   const [history, setHistory] = useState([]);
   const [selectedHistory, setSelectedHistory] = useState(null);
   const [showHeaders, setShowHeaders] = useState(false);
+  const [headers, setHeaders] = useState([
+    { key: "", value: "" },
+  ]);
 
   useEffect(() => {
     try {
@@ -77,6 +80,17 @@ function App() {
       return updated;
     });
   }
+
+  function handleHeaderChange(index, field, newValue) {
+    setHeaders(prev => {
+      const updated = [... prev];
+      updated[index] = {
+        ...updated[index],
+        [field]: newValue
+      };
+      return updated;
+    });
+  }
   
   const populateRequest = (item) => {
     setUrl(item.url);
@@ -92,6 +106,10 @@ function App() {
   const handleMethodChange = (value) => {
     setMethod(value);
     setSelectedHistory(null);
+  }
+
+  const handleAddHeader = () => {
+    setHeaders(prev => [... prev, { key: "", value: "" }]);
   }
 
   return (
@@ -112,6 +130,9 @@ function App() {
           history={history}
           onSelectHistory={populateRequest}
           selectedHistory={selectedHistory}
+          headers={headers}
+          onHeaderChange={handleHeaderChange}
+          onAddHeader={handleAddHeader}
         />
       </div>
 
