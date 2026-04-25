@@ -13,6 +13,7 @@ function App() {
   const [error, setError] = useState(null);
   const [history, setHistory] = useState([]);
   const [selectedHistory, setSelectedHistory] = useState(null);
+  const [showHeaders, setShowHeaders] = useState(false);
 
   useEffect(() => {
     try {
@@ -33,6 +34,7 @@ function App() {
   }, [history]);
 
   const handleSend = async () => {
+    setResponse(null);
     setLoading(true);
     setError(null);
 
@@ -93,23 +95,35 @@ function App() {
   }
 
   return (
-    <div>
-      <h1>HTTP Request Inspector</h1>
-      <RequestForm 
-        url={url}
-        setUrl={handleUrlChange}
-        method={method}
-        setMethod={handleMethodChange}
-        onSend={handleSend}
-        history={history}
-        onSelectHistory={populateRequest}
-        selectedHistory={selectedHistory}
-      />
-      <ResponseViewer 
-        response={response}
-        loading={loading}
-        error={error}
-      />
+    <div style={{
+      display: "flex",
+      flexDirection: "column",
+      height: "100vh"
+    }}>
+      <h1 style={{ flexShrink: 0 }}>HTTP Request Inspector</h1>
+
+      <div style={{ flexShrink: 0 }}>
+        <RequestForm 
+          url={url}
+          setUrl={handleUrlChange}
+          method={method}
+          setMethod={handleMethodChange}
+          onSend={handleSend}
+          history={history}
+          onSelectHistory={populateRequest}
+          selectedHistory={selectedHistory}
+        />
+      </div>
+
+      <div style={{ flex: 1, minHeight: 0 }}>
+        <ResponseViewer 
+          response={response}
+          loading={loading}
+          error={error}
+          showHeaders={showHeaders}
+          setShowHeaders={setShowHeaders}
+        />
+      </div>
     </div>
   );
 }

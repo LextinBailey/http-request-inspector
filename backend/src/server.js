@@ -22,7 +22,7 @@ app.post('/request', async (req, res) => {
 
         res.json({ 
             status: response.status,
-            headers: Object.fromEntries(response.headers),
+            headers: Object.fromEntries(response.headers.entries()),
             body: data,
             time
         });

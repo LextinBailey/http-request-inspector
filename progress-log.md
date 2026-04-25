@@ -101,3 +101,22 @@ A day-by-day log of development decisions, features, and design evolution.
 - Added `item.status` and `item.time` to request history
 - Added handling for URL overflow
     - Used Flexbox layout system
+
+## Day 8 (Apr 25, 2026): Header/Body Overflow
+
+- Tested large API response (`https://dummyjson.com/products?limit=100`) and ran into major UI issue
+    - Response body would disappear or get pushed off screen
+    - Some headers would overflow horizontally
+    - After debugging: data was correct, UI couldn't display it properly
+- Implemented root layout with Flexbox
+    - Don't collapse fixed sections (`RequestForm`) and (`ResponseViewer`) takes remaining space
+    - Allowed children to shrink (scrolling)
+- Updated `<pre>` styling:
+    - Long JSON wraps properly
+    - No horizontal overflow
+- Added scrollable body
+    - Wrapped body in a flex-controlled container
+- Added scrollable headers
+    - Headers cannot grow infinetely
+- Added header toggle
+    - Introduced collapsable headers
