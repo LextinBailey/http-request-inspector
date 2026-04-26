@@ -1,4 +1,4 @@
-function RequestForm({ url, setUrl, method, setMethod, onSend, history, onSelectHistory, selectedHistory, headers, onHeaderChange, onAddHeader }) {
+function RequestForm({ url, setUrl, method, setMethod, onSend, history, onSelectHistory, selectedHistory, headers, onHeaderChange, onAddHeader, onRemoveHeader }) {
     return (
         <div>
             <div style={{ marginBottom: "10px" }}>
@@ -40,6 +40,7 @@ function RequestForm({ url, setUrl, method, setMethod, onSend, history, onSelect
                             value={header.value}
                             onChange={(e) => onHeaderChange(index, "value", e.target.value)}
                         />
+                        <button onClick={() => onRemoveHeader(index)}>Remove</button>
                     </div>
                 ))}
             </div>

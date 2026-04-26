@@ -41,13 +41,24 @@ function App() {
     setLoading(true);
     setError(null);
 
+    const headersMap = headers.reduce((acc, header) => {
+      if (header.key.trim() !== "") {
+        acc[header.key] = header.value;
+      }
+      return acc;
+    }, {});
+
     try {
       const res = await fetch("http://localhost:3000/request", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ url, method })
+        body: JSON.stringify({ 
+          url, 
+          method,
+          headers: headersMap
+        })
       });
 
       const data = await res.json();
@@ -91,6 +102,10 @@ function App() {
       return updated;
     });
   }
+
+  function handleRemoveHeader(index) {
+    setHeaders(prev => prev.filter((_, i) => i !== index));
+  }
   
   const populateRequest = (item) => {
     setUrl(item.url);
@@ -133,6 +148,7 @@ function App() {
           headers={headers}
           onHeaderChange={handleHeaderChange}
           onAddHeader={handleAddHeader}
+          onRemoveHeader={handleRemoveHeader}
         />
       </div>
 

@@ -102,7 +102,7 @@ A day-by-day log of development decisions, features, and design evolution.
 - Added handling for URL overflow
     - Used Flexbox layout system
 
-## Day 8 (Apr 25, 2026): Header/Body Overflow, Setting Headers UI
+## Day 8 (Apr 25, 2026): Header/Body Overflow, Setting Request Headers UI
 
 - Tested large API response (`https://dummyjson.com/products?limit=100`) and ran into major UI issue
     - Response body would disappear or get pushed off screen
@@ -120,6 +120,14 @@ A day-by-day log of development decisions, features, and design evolution.
     - Headers cannot grow infinetely
 - Added header toggle
     - Introduced collapsable headers
-- Added input fields to enter headers
+- Added input fields to enter custom request headers
     - Not connected to backend yet
-- Added `"Add Header"` button to add a empty header
+- Added `Add Header` button to add a empty header
+
+## Day 9 (Apr 26, 2026): Remove Header, Converting Array to Object, Connected Backend
+
+- Added `Remove` button to each header row
+- Converted `headers` array to key-value object (`headersMap`)
+    - Filtered out empty header keys to prevent invalid requests
+- Sent `headersMap` in the POST `/request` payload
+    - Passed directly into the `fetch` call

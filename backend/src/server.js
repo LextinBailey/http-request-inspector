@@ -9,13 +9,13 @@ app.use(express.json());
 
 app.post('/request', async (req, res) => {
     try {
-        const { url, method } = req.body;
+        const { url, method, headers } = req.body;
 
         console.log("Incoming request:", url, method);
 
         const start = Date.now();
 
-        const response = await fetch(url, { method });
+        const response = await fetch(url, { method, headers });
         const data = await response.text();
 
         const time = Date.now() - start;

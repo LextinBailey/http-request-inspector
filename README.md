@@ -33,6 +33,7 @@ This project was built to strengthen my understanding of:
 - [x] Cross-origin requests (`CORS`)
 - [x] Request history (past 5 requests)
 - [x] Populate request history
+- [x] Dynamic custom request headers
 
 ### 👨‍💻 Developer Experience
 
@@ -137,6 +138,16 @@ When user selects a request from request history, `RequestForm` calls the `onSel
 
 `populateRequest` updates `url` and `method` to `item.url` and `item.method`.
 
+### 10. Custom Request Headers
+
+User can dynamically add and remove request headers via the UI.
+
+Header inputs are stored as an array object in state.
+
+On request submission, this array is transformed into a key-value object (`headersMap`) to match the expected HTTP headers format.
+Empty header keys are filtered out to prevent invalid requests.
+
+This object is sent to the backend in the POST `/request` payload, where it is then passed directly into the `fetch` call to configure the outgoing HTTP request.
 
 ## 📁 Project Structure
 
