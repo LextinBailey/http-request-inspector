@@ -132,7 +132,7 @@ A day-by-day log of development decisions, features, and design evolution.
 - Sent `headersMap` in the POST `/request` payload
     - Passed directly into the `fetch` call
 
-## Day 10 (Apr 27, 2026): POST Support
+## Day 10 (Apr 27, 2026): POST Support, Tailwind CSS Setup
 
 - Added conditionally rendered textarea when the selected request method is `POST`
 - Implemented JSON body validation
@@ -141,3 +141,6 @@ A day-by-day log of development decisions, features, and design evolution.
 - Included `body` in the POST `/request` payload
 - Added backend `method` checking
     - If the method is `POST`, body is attached to the outgoing `fetch`
+- Installed Tailwind v3
+    - v3 > v4 (Stable, well-documented Vite + React setup)
+    - `.cjs` config files (Project uses `"type": "module"` in `package.json`)
