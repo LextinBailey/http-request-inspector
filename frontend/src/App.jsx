@@ -17,6 +17,7 @@ function App() {
   const [headers, setHeaders] = useState([
     { key: "", value: "" },
   ]);
+  const [body, setBody] = useState("");
 
   useEffect(() => {
     try {
@@ -48,6 +49,24 @@ function App() {
       return acc;
     }, {});
 
+    // Validation phase
+    if (method === "POST" && body && body.trim() !== "") {
+      const isJson = headers.some(h =>
+        h.key.toLowerCase() === "content-type" &&
+        h.value.includes("application/json")
+      );
+
+      if (isJson) {
+        try {
+          JSON.parse(body);
+        } catch {
+          setError("Invalid JSON body");
+          setLoading(false);
+          return;
+        }
+      }
+    }
+
     try {
       const res = await fetch("http://localhost:3000/request", {
         method: "POST",
@@ -57,7 +76,8 @@ function App() {
         body: JSON.stringify({ 
           url, 
           method,
-          headers: headersMap
+          headers: headersMap,
+          body
         })
       });
 
@@ -78,7 +98,7 @@ function App() {
       setResponse(data);
       handleNewRequest(result);
     } catch(err) {
-      setError("Request failed");
+      setError(err.message || "Request failed");
       setResponse(null);
     } finally {
       setLoading(false);
@@ -149,6 +169,8 @@ function App() {
           onHeaderChange={handleHeaderChange}
           onAddHeader={handleAddHeader}
           onRemoveHeader={handleRemoveHeader}
+          body={body}
+          setBody={setBody}
         />
       </div>
 

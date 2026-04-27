@@ -131,3 +131,13 @@ A day-by-day log of development decisions, features, and design evolution.
     - Filtered out empty header keys to prevent invalid requests
 - Sent `headersMap` in the POST `/request` payload
     - Passed directly into the `fetch` call
+
+## Day 10 (Apr 27, 2026): POST Support
+
+- Added conditionally rendered textarea when the selected request method is `POST`
+- Implemented JSON body validation
+    - If `Content-Type: application/json` is present, the body is validated
+    - Invalid JSON prevents the request
+- Included `body` in the POST `/request` payload
+- Added backend `method` checking
+    - If the method is `POST`, body is attached to the outgoing `fetch`

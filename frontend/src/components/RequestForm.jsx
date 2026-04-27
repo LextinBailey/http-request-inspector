@@ -1,4 +1,5 @@
-function RequestForm({ url, setUrl, method, setMethod, onSend, history, onSelectHistory, selectedHistory, headers, onHeaderChange, onAddHeader, onRemoveHeader }) {
+function RequestForm({ url, setUrl, method, setMethod, onSend, history, onSelectHistory, selectedHistory, headers, onHeaderChange, onAddHeader, 
+    onRemoveHeader, body, setBody }) {
     return (
         <div>
             <div style={{ marginBottom: "10px" }}>
@@ -44,6 +45,14 @@ function RequestForm({ url, setUrl, method, setMethod, onSend, history, onSelect
                     </div>
                 ))}
             </div>
+
+            {method === "POST" && (
+                <textarea 
+                    value={body} 
+                    onChange={(e) => setBody(e.target.value)}
+                    style={{ resize: "vertical", width: "500px", height: "100px" }}>
+                </textarea>
+            )}
 
             <div style={{ marginBottom: "10px" }}>
                 <h3>Request History</h3>

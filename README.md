@@ -28,12 +28,13 @@ This project was built to strengthen my understanding of:
 - [x] Dynamic rendering of response data (headers, body, status)
 - [x] Parses JSON responses from backend
 - [x] Backend receives request configuration (URL + method)
-- [x] `POST /request` endpoint
+- [x] POST `/request` endpoint
 - [x] Performs HTTP request (`fetch`)
 - [x] Cross-origin requests (`CORS`)
 - [x] Request history (past 5 requests)
 - [x] Populate request history
 - [x] Dynamic custom request headers
+- [x] POST Support
 
 ### 👨‍💻 Developer Experience
 
@@ -148,6 +149,20 @@ On request submission, this array is transformed into a key-value object (`heade
 Empty header keys are filtered out to prevent invalid requests.
 
 This object is sent to the backend in the POST `/request` payload, where it is then passed directly into the `fetch` call to configure the outgoing HTTP request.
+
+### 11. Post Support
+
+When the selected request method is `POST`, a textarea is conditionally rendered to allow users to input a request body.
+
+The body is managed as a controlled string state to support raw input (JSON or text).
+
+On request submission:
+- If `Content-Type: application/json` is present, the body is validated using `JSON.parse`
+- Invalid JSON prevents the request and triggers an error state
+
+The body is then included in the POST `/request` payload.
+
+On the backend, the request body is only attached to the outgoing `fetch` call when the method is `POST` and the body is non-empty.
 
 ## 📁 Project Structure
 

@@ -9,13 +9,29 @@ app.use(express.json());
 
 app.post('/request', async (req, res) => {
     try {
-        const { url, method, headers } = req.body;
+        const { url, method, headers, body } = req.body;
+
+        const options = {
+            method,
+            headers
+        };
+
+        if (method === "POST" && body && body.trim() !== "") {
+            options.body = body;
+
+            if (!headers || !headers["Content-Type"]) {
+                options.headers = {
+                    ...headers,
+                    "Content-Type": "application/json"
+                };
+            }
+        }
 
         console.log("Incoming request:", url, method);
 
         const start = Date.now();
 
-        const response = await fetch(url, { method, headers });
+        const response = await fetch(url, options);
         const data = await response.text();
 
         const time = Date.now() - start;
