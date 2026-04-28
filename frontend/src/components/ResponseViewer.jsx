@@ -1,4 +1,4 @@
-function ResponseViewer({ response, loading, error, showHeaders, setShowHeaders }) {
+function ResponseViewer({ response, loading, error }) {
     if (loading) {
         return <div>Sending request...</div>;
     }
@@ -23,62 +23,32 @@ function ResponseViewer({ response, loading, error, showHeaders, setShowHeaders 
     const isSuccess = response.status >= 200 && response.status < 300;
 
    return (
-    <div style={{ 
-        marginTop: "20px",
-        display: "flex",
-        flexDirection: "column",
-        maxHeight: "70vh"
-    }}>
-        <div style={{ flexShrink: 0 }}>
-            <div>
-                <strong>Time:</strong> {response.time} ms
+    <div className="bg-white border rounded-lg shadow-sm p-4 space-y-4">
+        <div className="flex justify-between items-center">
+            <div className="text-sm text-gray-600">
+                {response.time} ms
             </div>
 
-            <div style={{ marginTop: "10px" }}>
-                <strong>Status:</strong>{" "}
-                <span style={{ color: isSuccess ? "green" : "red" }}>
-                    {response.status}
-                </span> 
-            </div>
-
-            <div style={{ marginTop: "10px" }}>
-                <button onClick={() => setShowHeaders(prev => !prev)}>
-                    {showHeaders ? "Hide Headers" : "Show Headers"}
-                </button>
-                
-                {showHeaders && (
-                    <div style={{ 
-                        maxHeight: "150px",
-                        overflowY: "auto",
-                        marginTop: "5px",
-                        border: "1px solid #ccc",
-                        padding: "5px"
-                    }}>
-                        {response.headers && Object.entries(response.headers).map(([key, value]) => (
-                            <div key={key}>
-                                <strong>{key}:</strong>{" "}
-                                <pre style={{
-                                    margin: 0,
-                                    whiteSpace: "pre-wrap",
-                                    wordBreak: "break-word"
-                                }}>
-                                    {value}
-                                </pre> 
-                            </div>
-                        ))}
-                    </div>
-                )}
+            <div className={`font-semibold ${isSuccess ? "text-green-600" : "text-red-600"}`}>
+                    {response.status} {isSuccess ? "OK" : ""}
             </div>
         </div>
-
-
-        <div style={{ flex: 1, overflowY: "auto", marginTop: "10px" }}>
-            <strong>Body:</strong>
-            <pre style={{
-                whiteSpace: "pre-wrap",
-                wordBreak: "break-word",
-                margin: 0
-            }}>
+        
+        <div>
+            <h4 className="font-semibold text-gray-700">Headers</h4>
+            <div className="space-y-1 max-h-40 overflow-y-auto border rounded p-2 bg-gray-50">
+                {response.headers && Object.entries(response.headers).map(([key, value]) => (
+                    <div key={key} className="text-sm">
+                        <span className="font-medium text-gray-700">{key}:</span>{" "}
+                        <span className="text-gray-600 break-all">{value}</span>
+                    </div>
+                ))}
+            </div>
+        </div>
+        
+        <div>
+            <h4 className="font-semibold text-gray-700">Body</h4>
+            <pre className="text-sm bg-gray-900 text-green-200 p-3 rounded overflow-auto max-h-64 leading-relaxed">
                 {formattedBody}
             </pre>
         </div>

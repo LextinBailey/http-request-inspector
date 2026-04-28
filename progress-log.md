@@ -144,3 +144,40 @@ A day-by-day log of development decisions, features, and design evolution.
 - Installed Tailwind v3
     - v3 > v4 (Stable, well-documented Vite + React setup)
     - `.cjs` config files (Project uses `"type": "module"` in `package.json`)
+
+## Day 11 (Apr 28, 2026): UI Improvements (RequestForm & ResponseViewer)
+
+- Introduced layout system (App shell)
+    - Wrapped application in a centered container using Tailwind (`max-w`, `mx-auto`, `p-6`)
+    - Added background and vertical spacing (`space-y-*`)
+    - Established consistent structure for all UI sections
+- Converted `RequestForm` into card UI
+    - Implemented "card" patter (`bg-white`, `border`, `rounded`, `shadow-sm`)
+    - Introduced consistent padding and spacing system
+    - Improved visual separation between sections
+- Refactored request bar
+    - Grouped inputs into a single flex row (`flex`, `gap-2`)
+    - Removed labels
+    - Added hover + focus states for better UX feedback
+- Built structured headers editor
+    - Used flex layout for consistent alignment (`flex`, `flex-1`)
+    - Added placeholders for clarity
+    - Wrapped list in scrollable container (`max-h`, `overflow-y-auto`) to prevent layout break
+- Improved request history panel
+    - Converted history list into a scrollable, bounded container
+    - Introduced truncation for long URLs
+- Upgraded `ResponseViewer` layout
+    - Converted into reusable card structure (matching `RequestForm`)
+    - Created top status bar with response time + status
+    - Improved hierarchhy and readability of response metadata
+- Structured headers display
+    - Added bounded, scrollable container for headers
+    - Handled long header values with wrapping (`break-all`)
+- Improved response body display
+    - Styled response body as a code block (`<pre>`) 
+    - Added scroll handling (`overflow-auto`, `max-h`)
+- Established consistent design patterns
+    - Reused card layout across components
+    - Standardized spacing
+    - Applied consistent color system
+- Learned the importance of establishing reusable patterns for future features

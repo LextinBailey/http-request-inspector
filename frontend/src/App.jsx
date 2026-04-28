@@ -13,7 +13,6 @@ function App() {
   const [error, setError] = useState(null);
   const [history, setHistory] = useState([]);
   const [selectedHistory, setSelectedHistory] = useState(null);
-  const [showHeaders, setShowHeaders] = useState(false);
   const [headers, setHeaders] = useState([
     { key: "", value: "" },
   ]);
@@ -148,14 +147,12 @@ function App() {
   }
 
   return (
-    <div style={{
-      display: "flex",
-      flexDirection: "column",
-      height: "100vh"
-    }}>
-      <h1 style={{ flexShrink: 0 }}>HTTP Request Inspector</h1>
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-5xl mx-auto space-y-6">
+        <h1 className="text-2xl font-bold text-gray-800">
+          HTTP Request Inspector
+        </h1>
 
-      <div style={{ flexShrink: 0 }}>
         <RequestForm 
           url={url}
           setUrl={handleUrlChange}
@@ -172,15 +169,11 @@ function App() {
           body={body}
           setBody={setBody}
         />
-      </div>
 
-      <div style={{ flex: 1, minHeight: 0 }}>
         <ResponseViewer 
           response={response}
           loading={loading}
           error={error}
-          showHeaders={showHeaders}
-          setShowHeaders={setShowHeaders}
         />
       </div>
     </div>
