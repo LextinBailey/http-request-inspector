@@ -195,4 +195,7 @@ A day-by-day log of development decisions, features, and design evolution.
 - Added copy response button
     - Copies response body to clipboard
     - UI updates on copy
-    - UI resets on updated `response` state and tab switching
+    - UI resets on updated `response` state
+- Split components into `BodyTab` and `HeadersTab`
+    - `ResponseViewer` was handling concerns that should be separated
+    - `BodyTab` and `HeadersTab` now display content in each of those tabs

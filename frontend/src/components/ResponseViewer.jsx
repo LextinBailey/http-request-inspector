@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import BodyTab from "./BodyTab";
+import HeadersTab from "./HeadersTab";
 
 function ResponseViewer({ response, loading, error }) {
 
@@ -60,7 +62,7 @@ function ResponseViewer({ response, loading, error }) {
             <button
                 className={`text-sm px-3 py-1 rounded ${
                     activeTab === "body" ? "text-white bg-gray-700 hover:bg-gray-600" : "bg-gray-200 hover:bg-gray-300"}`}
-                onClick={() => { setActiveTab("body"); setCopied(false); }}>
+                onClick={() => setActiveTab("body")}>
                 Body
             </button>
             <button
@@ -72,38 +74,17 @@ function ResponseViewer({ response, loading, error }) {
         </div>
         
         {activeTab === "headers" && (
-            <div>
-                <h4 className="font-semibold text-gray-700">Headers ({Object.keys(response.headers || {}).length})</h4>
-                <div className="space-y-1 max-h-40 overflow-y-auto border rounded p-2 bg-gray-50">
-                    {response.headers && Object.keys(response.headers).length > 0 ? (
-                        Object.entries(response.headers).map(([key, value]) => (
-                            <div key={key} className="text-sm">
-                                <span className="font-medium text-gray-700">{key}:</span>{" "}
-                                <span className="text-gray-600 break-all">{value}</span>
-                            </div>
-                        ))
-                    ) : (
-                        <div className="text-sm text-gray-500">No headers</div>
-                    )}
-                </div>
-            </div>
+            <HeadersTab
+                headers={response.headers}
+            />
         )}
         
         {activeTab === "body" && (
-            <div>
-                <div className="flex justify-between items-center mb-1">
-                    <h4 className="font-semibold text-gray-700">Body</h4>
-                    <button 
-                        className={`text-sm px-3 py-1 rounded ${
-                            copied ? "text-white bg-green-500 hover:bg-green-600" : "bg-gray-200 hover:bg-gray-300"}`}
-                        onClick={handleCopy}>
-                            {copied ? "✓ Copied" : "Copy"}
-                    </button>
-                </div>
-                <pre className="text-sm bg-gray-900 text-green-200 p-3 rounded overflow-auto max-h-64 leading-relaxed">
-                    {formattedBody}
-                </pre>
-            </div>
+            <BodyTab
+                formattedBody={formattedBody}
+                copied={copied}
+                onCopy={handleCopy}
+            />
         )}
     </div>
    )

@@ -173,7 +173,7 @@ When a user clicks 'Copy':
 - If copying failed, the error is caught and logged
 - UI updates to display successful 'Copied' feedback
 
-UI is reset on `response` state update and when user switches between tabs.
+UI is reset on `response` state update.
 
 ## 📁 Project Structure
 
@@ -189,7 +189,9 @@ http-request-inspector/
 │   │   ├── App.jsx
 │   │   └── components/
 │   │   │   ├── RequestForm.jsx
-│   │   │   └── ResponseViewer.jsx
+│   │   │   ├── ResponseViewer.jsx
+│   │   │   ├── BodyTab.jsx
+│   │   │   └── HeadersTab.jsx
 ├── progress-log.md
 └── README.md
 ```
