@@ -182,7 +182,7 @@ A day-by-day log of development decisions, features, and design evolution.
     - Applied consistent color system
 - Learned the importance of establishing reusable patterns for future features
 
-## Day 12 (Apr 29, 2026): Tabs (Body | Header), Copy Response
+## Day 12 (Apr 29, 2026): Tabs (Body | Header), Copy Response, Request History Rehydration
 
 - Added 'Body' and 'Header' buttons
     - Added state `activeTab` to determine the selected tab
@@ -199,3 +199,11 @@ A day-by-day log of development decisions, features, and design evolution.
 - Split components into `BodyTab` and `HeadersTab`
     - `ResponseViewer` was handling concerns that should be separated
     - `BodyTab` and `HeadersTab` now display content in each of those tabs
+- Implemented request history rehydration
+    - Changed history from metadata to full request/response snapshot
+    - Selecting a past request now restores full state
+    - Synchronized form + response viewer from history
+- Learned that data shape consistency between storage and UI matters
+    - I was storing `headers: headersMap` which is an object and my UI expected `headers.map(...)`
+    - The solution was to convert the object into an array of { key, value } objects
+    - Frontend state shape != backend/storage shape

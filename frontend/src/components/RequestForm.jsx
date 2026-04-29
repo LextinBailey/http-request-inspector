@@ -92,21 +92,21 @@ function RequestForm({ url, setUrl, method, setMethod, onSend, history, onSelect
                                     ${selectedHistory === item.timestamp ? "bg-blue-100" : "hover:bg-gray-100"}`}
                                 >
                                 <span className="font-semibold text-gray-700 w-12">
-                                    {item.method}
+                                    {item.request.method}
                                 </span>
 
                                 <span className="flex-1 truncate text-gray-600">
-                                    {item.url}
+                                    {item.request.url}
                                 </span>
 
                                 <span className={`font-medium &{
                                     item.status >= 200 && item.status < 300 ? "text-green-600" : "text-red-600
                                 }`}>
-                                    {item.status}
+                                    {item.response.status}
                                 </span>
 
                                 <span className="text-gray-500">
-                                    • {item.time}ms
+                                    • {item.response.time}ms
                                 </span>
                             </div>
                         ))}

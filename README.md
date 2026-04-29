@@ -32,7 +32,7 @@ This project was built to strengthen my understanding of:
 - [x] Performs HTTP request (`fetch`)
 - [x] Cross-origin requests (`CORS`)
 - [x] Request history (past 5 requests)
-- [x] Populate request history
+- [x] Request history rehydration
 - [x] Dynamic custom request headers
 - [x] POST Support
 - [x] Tabs (Body | Headers)
@@ -56,7 +56,7 @@ It renders two child components:
 
 ### 2. State Management
 
-All state is stored in `App` and passed down via props:
+All shared state is stored in `App` and passed down via props:
 
 - `url` -> request URL
 - `method` -> HTTP method (GET, POST)
@@ -135,11 +135,11 @@ Each time a request is successfully completed, `handleNewRequest` prepends the n
 A second `useEffect` watches the `history` state and synchronizes any changes back to `localStorage`.
 This ensures persistence across page reloads.
 
-### 9. Populate Request
+### 9. Request History Rehydration
 
 When user selects a request from request history, `RequestForm` calls the `onSelectHistory` function passed from `App`.
 
-`populateRequest` updates `url` and `method` to `item.url` and `item.method`.
+`populateRequest` restores full state to synchronize form and response viewer from history.
 
 ### 10. Custom Request Headers
 

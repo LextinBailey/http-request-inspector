@@ -87,10 +87,13 @@ function App() {
       }
 
       const result = {
-        method: method,
-        url: url,
-        status: data.status,
-        time: data.time,
+        request: {
+          url,
+          method,
+          headers: headersMap,
+          body
+        },
+        response: data,
         timestamp: Date.now()
       };
 
@@ -127,8 +130,20 @@ function App() {
   }
   
   const populateRequest = (item) => {
-    setUrl(item.url);
-    setMethod(item.method);
+    setUrl(item.request.url);
+    setMethod(item.request.method);
+
+    const headersObject = item.request.headers || {};
+
+    const headersArray = Object.entries(headersObject).map(([key, value]) => ({
+      key,
+      value
+    }));
+
+    setHeaders(headersArray.length > 0 ? headersArray : [{ key: "", value: "" }]);
+    setBody(item.request.body || "");
+
+    setResponse(item.response);
     setSelectedHistory(item.timestamp);
   };
 
