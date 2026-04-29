@@ -182,11 +182,17 @@ A day-by-day log of development decisions, features, and design evolution.
     - Applied consistent color system
 - Learned the importance of establishing reusable patterns for future features
 
-## Day 12 (Apr 29, 2026): Tabs (Body | Header)
+## Day 12 (Apr 29, 2026): Tabs (Body | Header), Copy Response
 
 - Added 'Body' and 'Header' buttons
     - Added state `activeTab` to determine the selected tab
     - Implemented conditional rendering to display response headers or body
-    - `activeTab` resets to "body" on `response` change
+    - `activeTab` resets to "body" on updated `response` state
 - Added 'No headers` fallback
 - Added header count
+- Refactored `formattedBody` to `getFormattedBody()`
+    - Reusable logic
+- Added copy response button
+    - Copies response body to clipboard
+    - UI updates on copy
+    - UI resets on updated `response` state and tab switching

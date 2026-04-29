@@ -35,6 +35,8 @@ This project was built to strengthen my understanding of:
 - [x] Populate request history
 - [x] Dynamic custom request headers
 - [x] POST Support
+- [x] Tabs (Body | Headers)
+- [x] Copy response
 
 ### 👨‍💻 Developer Experience
 
@@ -163,6 +165,15 @@ On request submission:
 The body is then included in the POST `/request` payload.
 
 On the backend, the request body is only attached to the outgoing `fetch` call when the method is `POST` and the body is non-empty.
+
+### 12. Copy Response
+
+When a user clicks 'Copy':
+- `handleCopy()` tries to copy `formattedBody` to the clipboard (`navigator.clipboard.writeText(formattedBody)`)
+- If copying failed, the error is caught and logged
+- UI updates to display successful 'Copied' feedback
+
+UI is reset on `response` state update and when user switches between tabs.
 
 ## 📁 Project Structure
 

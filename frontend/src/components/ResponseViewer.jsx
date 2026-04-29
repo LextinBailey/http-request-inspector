@@ -3,9 +3,11 @@ import { useState, useEffect } from "react";
 function ResponseViewer({ response, loading, error }) {
 
     const [activeTab, setActiveTab] = useState("body");
+    const [copied, setCopied] = useState(false);
 
     useEffect(() => {
         setActiveTab("body");
+        setCopied(false);
     }, [response]);
 
     if (loading) {
@@ -20,13 +22,24 @@ function ResponseViewer({ response, loading, error }) {
         return <div>No response yet</div>;
     }
 
-    let formattedBody = response.body;
+    const getFormattedBody = () => {
+        try {
+            const parsed = JSON.parse(response.body);
+            return JSON.stringify(parsed, null, 2);
+        } catch (e) {
+            return response.body;
+        }
+    };
 
-    try {
-        const parsed = JSON.parse(response.body);
-        formattedBody = JSON.stringify(parsed, null, 2);
-    } catch (e) {
-        // Leave as is
+    const formattedBody = getFormattedBody();
+
+    async function handleCopy() {
+        try {
+            await navigator.clipboard.writeText(formattedBody);
+            setCopied(true);
+        } catch (err) {
+            console.error("Failed to copy:", err);
+        }
     }
 
     const isSuccess = response.status >= 200 && response.status < 300;
@@ -47,7 +60,7 @@ function ResponseViewer({ response, loading, error }) {
             <button
                 className={`text-sm px-3 py-1 rounded ${
                     activeTab === "body" ? "text-white bg-gray-700 hover:bg-gray-600" : "bg-gray-200 hover:bg-gray-300"}`}
-                onClick={() => setActiveTab("body")}>
+                onClick={() => { setActiveTab("body"); setCopied(false); }}>
                 Body
             </button>
             <button
@@ -78,7 +91,15 @@ function ResponseViewer({ response, loading, error }) {
         
         {activeTab === "body" && (
             <div>
-                <h4 className="font-semibold text-gray-700">Body</h4>
+                <div className="flex justify-between items-center mb-1">
+                    <h4 className="font-semibold text-gray-700">Body</h4>
+                    <button 
+                        className={`text-sm px-3 py-1 rounded ${
+                            copied ? "text-white bg-green-500 hover:bg-green-600" : "bg-gray-200 hover:bg-gray-300"}`}
+                        onClick={handleCopy}>
+                            {copied ? "✓ Copied" : "Copy"}
+                    </button>
+                </div>
                 <pre className="text-sm bg-gray-900 text-green-200 p-3 rounded overflow-auto max-h-64 leading-relaxed">
                     {formattedBody}
                 </pre>
