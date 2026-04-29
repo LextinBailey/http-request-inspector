@@ -181,3 +181,12 @@ A day-by-day log of development decisions, features, and design evolution.
     - Standardized spacing
     - Applied consistent color system
 - Learned the importance of establishing reusable patterns for future features
+
+## Day 12 (Apr 29, 2026): Tabs (Body | Header)
+
+- Added 'Body' and 'Header' buttons
+    - Added state `activeTab` to determine the selected tab
+    - Implemented conditional rendering to display response headers or body
+    - `activeTab` resets to "body" on `response` change
+- Added 'No headers` fallback
+- Added header count

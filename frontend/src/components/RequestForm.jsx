@@ -1,5 +1,6 @@
 function RequestForm({ url, setUrl, method, setMethod, onSend, history, onSelectHistory, selectedHistory, headers, onHeaderChange, onAddHeader, 
     onRemoveHeader, body, setBody }) {
+
     return (
         <div className="bg-white border rounded-lg shadow-sm p-4 space-y-4">
             <div className="flex gap-2 items-center">

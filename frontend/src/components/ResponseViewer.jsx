@@ -1,4 +1,13 @@
+import { useState, useEffect } from "react";
+
 function ResponseViewer({ response, loading, error }) {
+
+    const [activeTab, setActiveTab] = useState("body");
+
+    useEffect(() => {
+        setActiveTab("body");
+    }, [response]);
+
     if (loading) {
         return <div>Sending request...</div>;
     }
@@ -33,25 +42,48 @@ function ResponseViewer({ response, loading, error }) {
                     {response.status} {isSuccess ? "OK" : ""}
             </div>
         </div>
+
+        <div className="flex justify-center space-x-4">
+            <button
+                className={`text-sm px-3 py-1 rounded ${
+                    activeTab === "body" ? "text-white bg-gray-700 hover:bg-gray-600" : "bg-gray-200 hover:bg-gray-300"}`}
+                onClick={() => setActiveTab("body")}>
+                Body
+            </button>
+            <button
+                className={`text-sm px-3 py-1 rounded ${
+                    activeTab === "headers" ? "text-white bg-gray-700 hover:bg-gray-600" : "bg-gray-200 hover:bg-gray-300"}`}
+                onClick={() => setActiveTab("headers")}>
+                Headers
+            </button>
+        </div>
         
-        <div>
-            <h4 className="font-semibold text-gray-700">Headers</h4>
-            <div className="space-y-1 max-h-40 overflow-y-auto border rounded p-2 bg-gray-50">
-                {response.headers && Object.entries(response.headers).map(([key, value]) => (
-                    <div key={key} className="text-sm">
-                        <span className="font-medium text-gray-700">{key}:</span>{" "}
-                        <span className="text-gray-600 break-all">{value}</span>
-                    </div>
-                ))}
+        {activeTab === "headers" && (
+            <div>
+                <h4 className="font-semibold text-gray-700">Headers ({Object.keys(response.headers || {}).length})</h4>
+                <div className="space-y-1 max-h-40 overflow-y-auto border rounded p-2 bg-gray-50">
+                    {response.headers && Object.keys(response.headers).length > 0 ? (
+                        Object.entries(response.headers).map(([key, value]) => (
+                            <div key={key} className="text-sm">
+                                <span className="font-medium text-gray-700">{key}:</span>{" "}
+                                <span className="text-gray-600 break-all">{value}</span>
+                            </div>
+                        ))
+                    ) : (
+                        <div className="text-sm text-gray-500">No headers</div>
+                    )}
+                </div>
             </div>
-        </div>
+        )}
         
-        <div>
-            <h4 className="font-semibold text-gray-700">Body</h4>
-            <pre className="text-sm bg-gray-900 text-green-200 p-3 rounded overflow-auto max-h-64 leading-relaxed">
-                {formattedBody}
-            </pre>
-        </div>
+        {activeTab === "body" && (
+            <div>
+                <h4 className="font-semibold text-gray-700">Body</h4>
+                <pre className="text-sm bg-gray-900 text-green-200 p-3 rounded overflow-auto max-h-64 leading-relaxed">
+                    {formattedBody}
+                </pre>
+            </div>
+        )}
     </div>
    )
 }
