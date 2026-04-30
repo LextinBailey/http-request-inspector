@@ -207,3 +207,18 @@ A day-by-day log of development decisions, features, and design evolution.
     - I was storing `headers: headersMap` which is an object and my UI expected `headers.map(...)`
     - The solution was to convert the object into an array of { key, value } objects
     - Frontend state shape != backend/storage shape
+
+## Day 13 (Apr 30, 2026): Selected Session Abstraction
+
+- Added `session` state
+- Introduced `setSession` into `populateRequest` and `handleSend`
+    - Did not remove current setters yet
+- Made `ResponseViewer` read from `session`
+- Replaced each field in `RequestForm` with `session.request.` one-by-one
+- Replaced all old state with `session`
+- Moved heading handler logic to `RequestForm`
+    - `RequestForm.jsx`: edits `session.request` and owns form logic
+- Succesfully refactored architecture
+    - `App` owns data
+    - `RequestForm` owns how that data is edited
+    - `session` = single source of truth

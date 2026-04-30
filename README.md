@@ -56,17 +56,26 @@ It renders two child components:
 
 ### 2. State Management
 
-All shared state is stored in `App` and passed down via props:
-
-- `url` -> request URL
-- `method` -> HTTP method (GET, POST)
-- `response` -> response data object
+The application uses a single session-based state object stored in `App`:
+- `session.request` -> current request configuration (URL, method, headers, body)
+- `session.response` -> latest response data from the backend
 - `loading` -> indicates an active request
 - `error` -> stores any request failure
+- `history` -> stores recent request/response sessions
 
-This follows React's unidirectional data flow:
-- State is owned by the parent (`App`)
-- Child components receive and update state via props
+Instead of managing multiple independent pieces of state (`url`, `method`, etc.), the app centralizes everything into a single `session` object.
+This ensures consistency between the request being edited and the response being displayed.
+
+The app follows React's unidirectional data flow:
+- `App` owns the `session` and global state
+- `RequestForm` updates `session.request` (user input)
+- `ResponseViewer` reads from `session.response` (output display)
+
+Design Reasoning for this Approach:
+- Eliminates duplicated state
+- Keeps request and response tightly coupled
+- Makes restoring past requests (history) straightforward
+- Mirrors how real API clients manage request/response lifecycles
 
 ### 3. Controlled Inputs
 
@@ -78,10 +87,11 @@ This ensures the UI always reflects the current application state.
 
 ### 4. Event Flow
 
-1. User enters a URL and selects a method
-2. User clicks "Send"
-3. `RequestForm` calls the `onSend` function passed from `App`
-4. `App` handles the request logic
+When a request is sent:
+1. `RequestForm` updates `session.request`
+2. `App` sends the request to the backend
+3. The response is stored in `session.response`
+4. `ResponseViewer` automatically re-renders with the new data
 
 ### 5. Request Lifecycle
 
@@ -91,9 +101,9 @@ Frontend:
 - Sends a request to the backend server (`fetch("http://localhost:3000/request")`)
 
 Backend:
-- Extracts data from the request (`url`, `method`)
+- Extracts data from the request (`url`, `method`, `headers`, `body`)
 - Starts a timer
-- Sends a request to the user-provided URL (`fetch(url, { method })`)
+- Sends a request to the user-provided URL (`fetch(url, options)`)
 - Converts response into plain text
 - Calculates how long the request took
 - Sends JSON response back to frontend (`status`, `headers`, `body`, `time`)
