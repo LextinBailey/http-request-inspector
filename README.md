@@ -56,26 +56,33 @@ It renders two child components:
 
 ### 2. State Management
 
-The application uses a single session-based state object stored in `App`:
+The application uses a session-based state model with React Context for shared data
+
+A global provider (`SessionProvider`) manages a centralized `session` object:
 - `session.request` -> current request configuration (URL, method, headers, body)
 - `session.response` -> latest response data from the backend
+
+Additional UI state is managed locally within the application:
 - `loading` -> indicates an active request
 - `error` -> stores any request failure
 - `history` -> stores recent request/response sessions
 
-Instead of managing multiple independent pieces of state (`url`, `method`, etc.), the app centralizes everything into a single `session` object.
-This ensures consistency between the request being edited and the response being displayed.
+Instead of managing multiple independent pieces of state (`url`, `method`, etc.), the application centralizes request/response into a single `session` object. This ensures consistency between the request being edited and the response being displayed.
 
 The app follows React's unidirectional data flow:
-- `App` owns the `session` and global state
+- `SessionProvider` owns and distributes the shared `session` state
 - `RequestForm` updates `session.request` (user input)
 - `ResponseViewer` reads from `session.response` (output display)
+- `App` coordinates UI state such as loading, errors, and request history
 
 Design Reasoning for this Approach:
 - Eliminates duplicated state
 - Keeps request and response tightly coupled
+- Separates global data (session) from UI state (loading/error/history)
 - Makes restoring past requests (history) straightforward
 - Mirrors how real API clients manage request/response lifecycles
+
+Context is used for state distribution, while state ownership remains within the provider component.
 
 ### 3. Controlled Inputs
 

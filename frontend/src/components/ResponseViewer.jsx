@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { SessionContext } from "../context/SessionContext";
+
 import BodyTab from "./BodyTab";
 import HeadersTab from "./HeadersTab";
 
-function ResponseViewer({ response, loading, error }) {
+function ResponseViewer({ loading, error }) {
+    const { session } = useContext(SessionContext);
 
     const [activeTab, setActiveTab] = useState("body");
     const [copied, setCopied] = useState(false);
@@ -10,7 +14,7 @@ function ResponseViewer({ response, loading, error }) {
     useEffect(() => {
         setActiveTab("body");
         setCopied(false);
-    }, [response]);
+    }, [session.response]);
 
     if (loading) {
         return <div>Sending request...</div>;
@@ -20,16 +24,16 @@ function ResponseViewer({ response, loading, error }) {
         return <div>Error: {error}</div>;
     }
 
-    if (!response) {
+    if (!session.response) {
         return <div>No response yet</div>;
     }
 
     const getFormattedBody = () => {
         try {
-            const parsed = JSON.parse(response.body);
+            const parsed = JSON.parse(session.response.body);
             return JSON.stringify(parsed, null, 2);
         } catch (e) {
-            return response.body;
+            return session.response.body;
         }
     };
 
@@ -44,17 +48,17 @@ function ResponseViewer({ response, loading, error }) {
         }
     }
 
-    const isSuccess = response.status >= 200 && response.status < 300;
+    const isSuccess = session.response.status >= 200 && session.response.status < 300;
 
    return (
     <div className="bg-white border rounded-lg shadow-sm p-4 space-y-4">
         <div className="flex justify-between items-center">
             <div className="text-sm text-gray-600">
-                {response.time} ms
+                {session.response.time} ms
             </div>
 
             <div className={`font-semibold ${isSuccess ? "text-green-600" : "text-red-600"}`}>
-                    {response.status} {isSuccess ? "OK" : ""}
+                    {session.response.status} {isSuccess ? "OK" : ""}
             </div>
         </div>
 
@@ -75,7 +79,7 @@ function ResponseViewer({ response, loading, error }) {
         
         {activeTab === "headers" && (
             <HeadersTab
-                headers={response.headers}
+                headers={session.response.headers}
             />
         )}
         

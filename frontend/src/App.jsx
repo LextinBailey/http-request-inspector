@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
+import { SessionContext } from "./context/SessionContext";
 
 import RequestForm from "./components/RequestForm";
 import ResponseViewer from "./components/ResponseViewer";
@@ -10,15 +11,8 @@ function App() {
   const [error, setError] = useState(null);
   const [history, setHistory] = useState([]);
   const [selectedHistory, setSelectedHistory] = useState(null);
-  const [session, setSession] = useState({
-    request: {
-      url: "",
-      method: "GET",
-      headers: [{ key: "", value: "" }],
-      body: ""
-    },
-    response: null
-  });
+  
+  const { session, setSession } = useContext(SessionContext);
 
   useEffect(() => {
     try {
@@ -147,8 +141,6 @@ function App() {
         </h1>
 
         <RequestForm 
-          session={session}
-          setSession={setSession}
           onSend={handleSend}
           history={history}
           onSelectHistory={populateRequest}
@@ -156,7 +148,6 @@ function App() {
         />
 
         <ResponseViewer 
-          response={session.response}
           loading={loading}
           error={error}
         />

@@ -1,4 +1,8 @@
-function RequestForm({ session, setSession, onSend, history, onSelectHistory, selectedHistory }) {
+import { useContext } from "react";
+import { SessionContext } from "../context/SessionContext";
+
+function RequestForm({ onSend, history, onSelectHistory, selectedHistory }) {
+    const { session, setSession } = useContext(SessionContext);
 
     function handleHeaderChange(index, field, newValue) {
         setSession(prev => {
@@ -53,7 +57,7 @@ function RequestForm({ session, setSession, onSend, history, onSelectHistory, se
             <div className="flex gap-2 items-center">
                 <select
                     className="border rounded px-2 py-2 bg-white text-gray-800"
-                    value={session.request.method || ""}
+                    value={session.request.method}
                     onChange={(e) => {
                         setSession(prev => ({
                             ...prev,
@@ -71,7 +75,7 @@ function RequestForm({ session, setSession, onSend, history, onSelectHistory, se
                 <input 
                     className="flex-1 border rounded px-3 py-2 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     placeholder="https://api.example.com"
-                    value={session.request.url || ""}
+                    value={session.request.url}
                     onChange={(e) => {
                         setSession(prev => ({
                             ...prev,
@@ -133,7 +137,7 @@ function RequestForm({ session, setSession, onSend, history, onSelectHistory, se
             {session.request.method === "POST" && (
                 <textarea 
                     className="w-full border rounded px-3 py-2 bg-white text-gray-800 resize-y h-32"
-                    value={session.request.body || ""} 
+                    value={session.request.body} 
                     onChange={(e) => {
                         setSession(prev => ({
                             ...prev,
@@ -170,8 +174,8 @@ function RequestForm({ session, setSession, onSend, history, onSelectHistory, se
                                     {item.request.url}
                                 </span>
 
-                                <span className={`font-medium &{
-                                    item.status >= 200 && item.status < 300 ? "text-green-600" : "text-red-600
+                                <span className={`font-medium ${
+                                    item.response.status >= 200 && item.response.status < 300 ? "text-green-600" : "text-red-600"
                                 }`}>
                                     {item.response.status}
                                 </span>

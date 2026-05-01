@@ -208,7 +208,7 @@ A day-by-day log of development decisions, features, and design evolution.
     - The solution was to convert the object into an array of { key, value } objects
     - Frontend state shape != backend/storage shape
 
-## Day 13 (Apr 30, 2026): Selected Session Abstraction
+## Day 13 (Apr 30, 2026): Selected Session Abstraction, Context API
 
 - Added `session` state
 - Introduced `setSession` into `populateRequest` and `handleSend`
@@ -222,3 +222,11 @@ A day-by-day log of development decisions, features, and design evolution.
     - `App` owns data
     - `RequestForm` owns how that data is edited
     - `session` = single source of truth
+- Fixed bugs in `RequestForm`
+    - `&{` replaced with `${`
+    - Missing "
+    - `item.status` replaced with `item.response.status`
+- Learned when something should work but doesn't, always try tooling/caching before rewriting logic
+- Introduced Context API
+    - Moved `session` into a global provider
+    - Removed prop drilling `session`
