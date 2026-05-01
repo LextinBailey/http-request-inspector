@@ -231,9 +231,16 @@ A day-by-day log of development decisions, features, and design evolution.
     - Moved `session` into a global provider
     - Removed prop drilling `session`
 
-## Day 14 (May 1, 2026): Service Layer
+## Day 14 (May 1, 2026): Service Layer, Controller Layer
 
-- Extracted HTTP logic into a service layer (`httpService`)
+- Extracted HTTP logic into service layer (`httpService`)
     - Moved `fetch` + timing logic into `executeRequest`
     - Simplified `/request` route to use service
 - Separated business logic from routing
+- Extracted request/response logic into controller layer (`requestController`)
+    - Moved destructing request, building `options`, calling `executeRequest`, and returning `res.json(response)` into `handleRequest`
+    - Replaced route with `app.post('/request', handleRequest);`
+- Separated concerns
+    - `server.js` = routing only
+    - `requestController.js` = request/response handling
+    - `httpService.js` = business logic

@@ -108,15 +108,17 @@ Frontend:
 - Sends a request to the backend server (`fetch("http://localhost:3000/request")`)
 
 Backend:
-- Extracts data from the request (`url`, `method`, `headers`, `body`)
-- Calls service layer function `executeRequest(url, options)`
-    - Starts a timer
-    - Sends a request to the user-provided URL (`fetch(url, options)`)
-    - Converts response into plain text
-    - Calculates how long the request took
-    - Returns response object
-- Sends JSON response back to frontend (`status`, `headers`, `body`, `time`)
-- Returns error response (`500`) if request fails
+- Calls controller layer function `handleRequest(req, res)`
+    - Extracts data from the request (`url`, `method`, `headers`, `body`)
+    - Builds `options`
+    - Calls service layer function `executeRequest(url, options)`
+        - Starts a timer
+        - Sends a request to the user-provided URL (`fetch(url, options)`)
+        - Converts response into plain text
+        - Calculates how long the request took
+        - Returns response object
+    - Sends JSON response back to frontend (`status`, `headers`, `body`, `time`)
+    - Returns error response (`500`) if request fails
 - Acts as a proxy between frontend and external APIs
 
 Frontend:
@@ -202,6 +204,8 @@ http-request-inspector/
 │   └── src/
 │   │   ├── services/
 │   │   │   ├── httpService.js
+│   │   ├── controllers/
+│   │   │   ├── requestController.js
 │   │   └── server.js
 ├── frontend/
 │   ├── src/
