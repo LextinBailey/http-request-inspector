@@ -1,4 +1,6 @@
 const express = require('express');
+const { executeRequest } = require("./services/httpService");
+
 const app = express();
 const PORT = 3000;
 
@@ -29,19 +31,9 @@ app.post('/request', async (req, res) => {
 
         console.log("Incoming request:", url, method);
 
-        const start = Date.now();
-
-        const response = await fetch(url, options);
-        const data = await response.text();
-
-        const time = Date.now() - start;
-
-        res.json({ 
-            status: response.status,
-            headers: Object.fromEntries(response.headers.entries()),
-            body: data,
-            time
-        });
+        const response = await executeRequest(url, options);
+        
+        res.json(response);
     } catch (err) {
         console.error("Fetch error:", err.message);
 

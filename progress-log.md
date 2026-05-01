@@ -230,3 +230,10 @@ A day-by-day log of development decisions, features, and design evolution.
 - Introduced Context API
     - Moved `session` into a global provider
     - Removed prop drilling `session`
+
+## Day 14 (May 1, 2026): Service Layer
+
+- Extracted HTTP logic into a service layer (`httpService`)
+    - Moved `fetch` + timing logic into `executeRequest`
+    - Simplified `/request` route to use service
+- Separated business logic from routing

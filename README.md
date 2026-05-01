@@ -109,10 +109,12 @@ Frontend:
 
 Backend:
 - Extracts data from the request (`url`, `method`, `headers`, `body`)
-- Starts a timer
-- Sends a request to the user-provided URL (`fetch(url, options)`)
-- Converts response into plain text
-- Calculates how long the request took
+- Calls service layer function `executeRequest(url, options)`
+    - Starts a timer
+    - Sends a request to the user-provided URL (`fetch(url, options)`)
+    - Converts response into plain text
+    - Calculates how long the request took
+    - Returns response object
 - Sends JSON response back to frontend (`status`, `headers`, `body`, `time`)
 - Returns error response (`500`) if request fails
 - Acts as a proxy between frontend and external APIs
@@ -197,10 +199,10 @@ UI is reset on `response` state update.
 ```
 http-request-inspector/
 ├── backend/
-│   ├── package-lock.json
-│   ├── package.json
-│   └── src
-│       └── server.js
+│   └── src/
+│   │   ├── services/
+│   │   │   ├── httpService.js
+│   │   └── server.js
 ├── frontend/
 │   ├── src/
 │   │   ├── App.jsx
