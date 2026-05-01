@@ -28,7 +28,7 @@ This project was built to strengthen my understanding of:
 - [x] Dynamic rendering of response data (headers, body, status)
 - [x] Parses JSON responses from backend
 - [x] Backend receives request configuration (URL + method)
-- [x] POST `/request` endpoint
+- [x] POST `/requests` endpoint
 - [x] Performs HTTP request (`fetch`)
 - [x] Cross-origin requests (`CORS`)
 - [x] Request history (past 5 requests)
@@ -117,6 +117,7 @@ Backend:
         - Converts response into plain text
         - Calculates how long the request took
         - Returns response object
+    - Request is stored in database storage
     - Sends JSON response back to frontend (`status`, `headers`, `body`, `time`)
     - Returns error response (`500`) if request fails
 - Acts as a proxy between frontend and external APIs
@@ -171,7 +172,7 @@ Header inputs are stored as an array object in state.
 On request submission, this array is transformed into a key-value object (`headersMap`) to match the expected HTTP headers format.
 Empty header keys are filtered out to prevent invalid requests.
 
-This object is sent to the backend in the POST `/request` payload, where it is then passed directly into the `fetch` call to configure the outgoing HTTP request.
+This object is sent to the backend in the POST `/requests` payload, where it is then passed directly into the `fetch` call to configure the outgoing HTTP request.
 
 ### 11. Post Support
 
@@ -183,7 +184,7 @@ On request submission:
 - If `Content-Type: application/json` is present, the body is validated using `JSON.parse`
 - Invalid JSON prevents the request and triggers an error state
 
-The body is then included in the POST `/request` payload.
+The body is then included in the POST `/requests` payload.
 
 On the backend, the request body is only attached to the outgoing `fetch` call when the method is `POST` and the body is non-empty.
 
@@ -202,6 +203,8 @@ UI is reset on `response` state update.
 http-request-inspector/
 ├── backend/
 │   └── src/
+│   │   ├── db/
+│   │   │   ├── db.js
 │   │   ├── controllers/
 │   │   │   ├── requestController.js
 │   │   ├── routes/
