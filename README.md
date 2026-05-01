@@ -29,6 +29,7 @@ This project was built to strengthen my understanding of:
 - [x] Parses JSON responses from backend
 - [x] Backend receives request configuration (URL + method)
 - [x] POST `/requests` endpoint
+- [x] GET `/requests` endpoint
 - [x] Performs HTTP request (`fetch`)
 - [x] Cross-origin requests (`CORS`)
 - [x] Request history (past 5 requests)

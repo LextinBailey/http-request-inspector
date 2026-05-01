@@ -231,7 +231,7 @@ A day-by-day log of development decisions, features, and design evolution.
     - Moved `session` into a global provider
     - Removed prop drilling `session`
 
-## Day 14 (May 1, 2026): Service Layer, Controller Layer, Routes Layer
+## Day 14 (May 1, 2026): Service Layer, Controller Layer, Routes Layer, PostgreSQL Database, GET /requests
 
 - Extracted HTTP logic into service layer (`httpService`)
     - Moved `fetch` + timing logic into `executeRequest`
@@ -246,3 +246,14 @@ A day-by-day log of development decisions, features, and design evolution.
     - `httpService.js` = business logic
 - Extracted router logic into `requestRoutes`
     - Routes are grouped by domain
+- Implemented PostgreSQL persistence layer
+    - Created `requests` table to store HTTP request history
+    - Added `pg` connection pool for database access
+    - Implemented parameterized `INSERT INTO requests` query to safely store data
+    - Persisted request + response data
+- Improved backend architecture to full-stack structure
+    - Request flow now persists data end-to-end
+    - Frontend -> backend -> HTTP execution -> database storage
+- Add `GET /request` route for retrieving stored requests
+    - `POST /requests` -> saves request
+    - `GET /requests` -> retrieves history

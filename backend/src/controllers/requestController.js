@@ -45,10 +45,20 @@ async function handleRequest(req, res) {
     } catch (err) {
         console.error("Fetch error:", err.message);
 
-        res.status(500).json({
-            error: "Failed to fetch URL"
-        });
+        res.status(500).json({ error: "Failed to fetch URL" });
     }
 }
 
-module.exports = { handleRequest };
+async function getRequests(req, res) {
+    try {
+        const result = await pool.query(
+            "SELECT * FROM requests ORDER BY created_at DESC LIMIT 10"
+        );
+
+        res.json(result.rows);
+    } catch (err) {
+        res.status(500).json({ error: "Failed to fetch requests" });
+    }
+}
+
+module.exports = { handleRequest, getRequests };
