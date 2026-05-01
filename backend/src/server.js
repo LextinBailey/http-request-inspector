@@ -1,15 +1,13 @@
 const express = require('express');
-const { handleRequest } = require("./controllers/requestController");
+const requestRoutes = require("./routes/requestRoutes");
+const cors = require("cors");
 
 const app = express();
 const PORT = 3000;
 
-const cors = require("cors");
 app.use(cors());
-
 app.use(express.json());
-
-app.post('/request', handleRequest);
+app.use(requestRoutes);
 
 app.get('/', (req, res) => {
     res.send('Server is running');

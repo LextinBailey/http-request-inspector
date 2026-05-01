@@ -202,10 +202,12 @@ UI is reset on `response` state update.
 http-request-inspector/
 ├── backend/
 │   └── src/
-│   │   ├── services/
-│   │   │   ├── httpService.js
 │   │   ├── controllers/
 │   │   │   ├── requestController.js
+│   │   ├── routes/
+│   │   │   ├── requestRoutes.js
+│   │   ├── services/
+│   │   │   ├── httpService.js
 │   │   └── server.js
 ├── frontend/
 │   ├── src/
