@@ -26,7 +26,7 @@ async function handleRequest(req, res) {
         const response = await executeRequest(url, options);
 
         await pool.query(
-            `INSERT INTO requests
+            `INSERT INTO requests 
             (url, method, headers, body, status, response_body, response_headers, time_ms)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
             [
@@ -57,6 +57,7 @@ async function getRequests(req, res) {
 
         res.json(result.rows);
     } catch (err) {
+        console.log("GET /requests ERROR:", err);
         res.status(500).json({ error: "Failed to fetch requests" });
     }
 }

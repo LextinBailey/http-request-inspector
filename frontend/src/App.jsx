@@ -15,22 +15,42 @@ function App() {
   const { session, setSession } = useContext(SessionContext);
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem("history");
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed)) {
-          setHistory(parsed);
-        }
-      }
-    } catch (err) {
-      console.error("Failed to parse history:", err);
-    }
+    fetchHistory();
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("history", JSON.stringify(history));
-  }, [history]);
+  const fetchHistory = async () => {
+    try {
+      const res = await fetch("http://localhost:3000/requests");
+
+      if (!res.ok) {
+        throw new Error(`HTTP error: ${res.status}`);
+      }
+
+      const text = await res.text();
+
+      const data = JSON.parse(text);
+
+      const normalized = data.map(item => ({
+        request: {
+          url: item.url,
+          method: item.method,
+          headers: item.headers || {},
+          body: item.body || ""
+        },
+        response: {
+          status: item.status,
+          headers: item.response_headers,
+          body: item.response_body,
+          time: item.time_ms
+        },
+        timestamp: new Date(item.created_at).getTime()
+      }));
+
+      setHistory(normalized);
+    } catch (err) {
+      console.error("Failed to fetch history", err);
+    }
+  };
 
   const handleSend = async () => {
     setLoading(true);
@@ -81,36 +101,18 @@ function App() {
         throw new Error(data.error || "Request failed");
       }
 
-      const result = {
-        request: {
-          url: session.request.url,
-          method: session.request.method,
-          headers: headersMap,
-          body: session.request.body
-        },
-        response: data,
-        timestamp: Date.now()
-      };
-
       setSession(prev => ({
         ...prev,
         response: data
       }));
 
-      handleNewRequest(result);
+      await fetchHistory();
     } catch(err) {
       setError(err.message || "Request failed");
     } finally {
       setLoading(false);
     }
   };
-
-  function handleNewRequest(requestData) {
-    setHistory(prev => {
-      const updated = [requestData, ...prev].slice(0, 5);
-      return updated;
-    });
-  }
   
   const populateRequest = (item) => {
     const headersObject = item.request.headers || {};

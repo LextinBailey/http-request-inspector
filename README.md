@@ -10,11 +10,19 @@ This project was built to strengthen my understanding of:
 - React component architecture
 - State management and data flow
 - Client-server interaction patterns
+- Designing and consuming REST APIs
+- Persisting data with PostgreSQL
 
 ## 💻 Tech Stack
 
 - Frontend: React (Vite)
 - Backend: Node.js + Express
+- Database: PostgreSQL
+
+## 🔄 Data Flow
+
+Client -> POST /requests -> Backend executes request -> Saves to PostgreSQL
+       -> GET /requests -> Returns persisted history -> Frontend renders
 
 ## 🔥 Features
 
@@ -32,8 +40,9 @@ This project was built to strengthen my understanding of:
 - [x] GET `/requests` endpoint
 - [x] Performs HTTP request (`fetch`)
 - [x] Cross-origin requests (`CORS`)
-- [x] Request history (past 5 requests)
-- [x] Request history rehydration
+- [x] Request history persisted in PostgreSQL
+- [x] Fetch history via GET `/requests`
+- [x] History updates after each request (DB as source of truth)
 - [x] Dynamic custom request headers
 - [x] POST Support
 - [x] Tabs (Body | Headers)
@@ -106,28 +115,24 @@ When a request is sent:
 Frontend:
 - `loading` is set to `true`
 - Errors are cleared
-- Sends a request to the backend server (`fetch("http://localhost:3000/request")`)
+- Sends a request to the backend (`POST /requests`)
 
 Backend:
-- Calls controller layer function `handleRequest(req, res)`
-    - Extracts data from the request (`url`, `method`, `headers`, `body`)
-    - Builds `options`
-    - Calls service layer function `executeRequest(url, options)`
-        - Starts a timer
-        - Sends a request to the user-provided URL (`fetch(url, options)`)
-        - Converts response into plain text
-        - Calculates how long the request took
-        - Returns response object
-    - Request is stored in database storage
-    - Sends JSON response back to frontend (`status`, `headers`, `body`, `time`)
-    - Returns error response (`500`) if request fails
-- Acts as a proxy between frontend and external APIs
+- Handles `POST /requests`
+    - Extracts request config (`url`, `method`, `headers`, `body`)
+    - Calls service layer to execute HTTP request
+    - Measures response time
+    - Converts headers to plain object
+    - Persists request + response data into PostgreSQL
+    - Returns structured response (`status`, `headers`, `body`, `time`)
+- Handles `GET /requests`
+    - Retrieves recent requests from database
+    - Returns them to frontend
 
-Frontend:
-- Parses response
-- Checks `res.ok` to handle backend errors
-- Stores response in state 
-- `loading` is set to `false`
+After a successful request:
+- Frontend calls `GET /requests`
+- Normalizes database records into UI-friendly format
+- Updates request history state
 
 ### 6. Conditional Rendering
 
@@ -150,13 +155,17 @@ Handles missing or undefined data to prevent UI crashes.
 
 ### 8. Request History
 
-On component mount, a `useEffect` runs once to retrieve any saved request history from `localStorage`.
-If valid data exists, it is parsed and used to initialize the `history` state.
+Request history is stored in PostgreSQL and retrieved via `GET /requests`.
 
-Each time a request is successfully completed, `handleNewRequest` prepends the new request object to the `history` array while keeping only the last 5 entries.
+On initial load:
+- Frontend fetches persisted history from backend
+- Data is normalized to match UI structure
 
-A second `useEffect` watches the `history` state and synchronizes any changes back to `localStorage`.
-This ensures persistence across page reloads.
+After each request:
+- Backend saves the request
+- Frontend re-fetches history to stay in sync
+
+This ensures a single source of truth and persistence across sessions.
 
 ### 9. Request History Rehydration
 
@@ -203,6 +212,7 @@ UI is reset on `response` state update.
 ```
 http-request-inspector/
 ├── backend/
+│   ├── .env.example
 │   └── src/
 │   │   ├── db/
 │   │   │   ├── db.js
@@ -231,4 +241,9 @@ Progress and development insights are tracked in `progress-log.md`.
 
 ## 🚧 Status
 
-In Progress
+Feature Complete (Core Functionality)
+
+Currently focusing on:
+- UI/UX polish
+- Deployment (frontend + backend)
+- Potential enhancements (auth, collections)
