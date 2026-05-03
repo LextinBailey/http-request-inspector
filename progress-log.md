@@ -258,7 +258,7 @@ A day-by-day log of development decisions, features, and design evolution.
     - `POST /requests` → saves request
     - `GET /requests` → retrieves history
 
-## Day 15 (May 2, 2026): Request History Reflects Persisted Data, Revamped UI/UX
+## Day 15 (May 2, 2026): Request History Reflects Persisted Data, Revamped UI/UX, `Enter` 
 
 - Refactored request history to use backend API (`GET /requests`)
     - No longer uses `localStorage`
@@ -267,3 +267,6 @@ A day-by-day log of development decisions, features, and design evolution.
 - Added `.env` folder to store `DATABASE_URL`
     - Example shown in `.env.example`
 - Improved UI/UX
+- Added `enter` key functionality
+    - Wrapped input field in `form`
+    - Handles `event.preventDefault()` to avoid page refreshes

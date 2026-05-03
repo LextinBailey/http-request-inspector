@@ -54,7 +54,13 @@ function RequestForm({ onSend, history, onSelectHistory, selectedHistory }) {
 
     return (
         <div className="px-4 pb-4 space-y-3">
-            <div className="flex gap-2 items-center border-b border-border pb-4">
+            <form 
+                className="flex gap-2 items-center border-b border-border pb-4"
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    onSend();
+                }}
+            >
                 <div className="relative">
                     <select
                         className="appearance-none flex items-center bg-transparent font-mono text-sm text-primary border border-border rounded px-2 cursor-pointer h-[38px]"
@@ -95,10 +101,10 @@ function RequestForm({ onSend, history, onSelectHistory, selectedHistory }) {
                 
                 <button 
                     className="flex items-center justify-center bg-transparent text-primary border border-border rounded px-4 h-[38px] text-sm hover:bg-accentSoft hover:border-accent transition-colors"
-                    onClick={onSend}>
+                    type="submit">
                         Send
                 </button>
-            </div>
+            </form>
 
             <div className="space-y-2">
                 <div className="flex justify-between items-center">
