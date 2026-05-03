@@ -53,7 +53,7 @@ function RequestForm({ onSend, history, onSelectHistory, selectedHistory }) {
     }
 
     return (
-        <div className="px-4 pb-4 space-y-3">
+        <div className="px-2 pb-4 space-y-3">
             <form 
                 className="flex gap-2 items-center border-b border-border pb-4"
                 onSubmit={(e) => {
@@ -63,7 +63,7 @@ function RequestForm({ onSend, history, onSelectHistory, selectedHistory }) {
             >
                 <div className="relative">
                     <select
-                        className="appearance-none flex items-center bg-transparent font-mono text-sm text-primary border border-border rounded px-2 cursor-pointer h-[38px]"
+                        className="appearance-none flex items-center bg-transparent font-mono text-sm text-primary border border-border rounded pl-2 pr-4 cursor-pointer h-[38px]"
                         value={session.request.method}
                         onChange={(e) => {
                             setSession(prev => ({
