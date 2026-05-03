@@ -21,8 +21,8 @@ This project was built to strengthen my understanding of:
 
 ## 🔄 Data Flow
 
-Client -> POST /requests -> Backend executes request -> Saves to PostgreSQL
-       -> GET /requests -> Returns persisted history -> Frontend renders
+Client → POST /requests → Backend executes request → Saves to PostgreSQL
+       → GET /requests → Returns persisted history → Frontend renders
 
 ## 🔥 Features
 
@@ -61,21 +61,21 @@ Client -> POST /requests -> Backend executes request -> Saves to PostgreSQL
 The application is structured around a top-level `App` component which manages all shared state.
 
 It renders two child components:
-- `RequestForm` -> captures user input
-- `ResponseViewer` -> displays the response
+- `RequestForm` → captures user input
+- `ResponseViewer` → displays the response
 
 ### 2. State Management
 
 The application uses a session-based state model with React Context for shared data
 
 A global provider (`SessionProvider`) manages a centralized `session` object:
-- `session.request` -> current request configuration (URL, method, headers, body)
-- `session.response` -> latest response data from the backend
+- `session.request` → current request configuration (URL, method, headers, body)
+- `session.response` → latest response data from the backend
 
 Additional UI state is managed locally within the application:
-- `loading` -> indicates an active request
-- `error` -> stores any request failure
-- `history` -> stores recent request/response sessions
+- `loading` → indicates an active request
+- `error` → stores any request failure
+- `history` → stores recent request/response sessions
 
 Instead of managing multiple independent pieces of state (`url`, `method`, etc.), the application centralizes request/response into a single `session` object. This ensures consistency between the request being edited and the response being displayed.
 
@@ -138,10 +138,10 @@ After a successful request:
 
 `ResponseViewer` renders different UI based on application state:
 
-- If `loading` -> displays "Sending request..."
-- If `error` -> displays error message
-- If no response -> displays placeholder
-- Otherwise -> displays response data
+- If `loading` → displays "Sending request..."
+- If `error` → displays error message
+- If no response → displays placeholder
+- Otherwise → displays response data
 
 ### 7. Rendering Response Data
 

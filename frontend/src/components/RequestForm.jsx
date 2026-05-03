@@ -53,27 +53,33 @@ function RequestForm({ onSend, history, onSelectHistory, selectedHistory }) {
     }
 
     return (
-        <div className="bg-white border rounded-lg shadow-sm p-4 space-y-4">
-            <div className="flex gap-2 items-center">
-                <select
-                    className="border rounded px-2 py-2 bg-white text-gray-800"
-                    value={session.request.method}
-                    onChange={(e) => {
-                        setSession(prev => ({
-                            ...prev,
-                            request: {
-                                ...prev.request,
-                                method: e.target.value
-                            }
-                        }));
-                    }}
-                >
-                    <option value="GET">GET</option>
-                    <option value="POST">POST</option>
-                </select>
+        <div className="px-4 pb-4 space-y-3">
+            <div className="flex gap-2 items-center border-b border-border pb-4">
+                <div className="relative">
+                    <select
+                        className="appearance-none flex items-center bg-transparent font-mono text-sm text-primary border border-border rounded px-2 cursor-pointer h-[38px]"
+                        value={session.request.method}
+                        onChange={(e) => {
+                            setSession(prev => ({
+                                ...prev,
+                                request: {
+                                    ...prev.request,
+                                    method: e.target.value
+                                }
+                            }));
+                        }}
+                    >
+                        <option value="GET">GET</option>
+                        <option value="POST">POST</option>
+                    </select>
+                    <span className="flex items-center justify-center leading-none pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-primary text-xs">
+                        ▾
+                    </span>
+                </div>
 
                 <input 
-                    className="flex-1 border rounded px-3 py-2 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="flex-1 bg-active font-mono text-sm text-primary border border-border rounded px-3 py-2
+                     h-[38px] placeholder:text-muted focus:outline-none focus:border-accent"
                     placeholder="https://api.example.com"
                     value={session.request.url}
                     onChange={(e) => {
@@ -88,42 +94,45 @@ function RequestForm({ onSend, history, onSelectHistory, selectedHistory }) {
                 />
                 
                 <button 
-                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                    className="flex items-center justify-center bg-transparent text-primary border border-border rounded px-4 h-[38px] text-sm hover:bg-accentSoft hover:border-accent transition-colors"
                     onClick={onSend}>
                         Send
                 </button>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                    <h3 className="font-semibold text-gray-700">Headers</h3>
+                    <span className="text-xs font-mono tracking-widest text-labels uppercase">Headers</span>
                     <button 
-                        className="text-sm bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
+                        className="text-xs text-accent hover:text-primary border border-border px-2 py-1 rounded hover:bg-accentSoft transition-colors"
                         onClick={handleAddHeader}
                     >
                         + Add
                     </button>
                 </div>
                 
-                <div className="max-h-40 overflow-y-auto space-y-2 border rounded p-2 bg-gray-50">
+                <div className={`space-y-2 ${session.request.headers.length > 5 ? "max-h-48 overflow-y-auto pr-1" : ""}`}>
                     {(session.request.headers || []).map((header, index) => (
                         <div key={index} className="flex gap-2 items-center">
                             <input
-                                className="flex-1 border rounded px-2 py-1 bg-white text-gray-800"
+                                className="flex-1 bg-active border border-border rounded px-3 py-1.5 text-sm text-primary
+                                 placeholder:text-muted font-mono focus:outline-none focus:border-accent"
                                 placeholder="Key"
                                 value={header.key}
                                 onChange={(e) => handleHeaderChange(index, "key", e.target.value)}
                             />
                             
                             <input
-                                className="flex-1 border rounded px-2 py-1 bg-white text-gray-800"
+                                className="flex-1 bg-active border border-border rounded px-3 py-1.5 text-sm text-primary
+                                 placeholder:text-muted font-mono focus:outline-none focus:border-accent"
                                 placeholder="Value"
                                 value={header.value}
                                 onChange={(e) => handleHeaderChange(index, "value", e.target.value)}
                             />
 
                             <button 
-                                className="text-red-500 hover:text-red-700 text-sm"
+                                className="text-xs border border-border text-muted px-2 py-1.5 rounded hover:border-red-500
+                                 hover:text-red-400 transition-colors"
                                 onClick={() => handleRemoveHeader(index)}
                             >
                                 Remove
@@ -131,12 +140,12 @@ function RequestForm({ onSend, history, onSelectHistory, selectedHistory }) {
                         </div>
                     ))}
                 </div>
-                
             </div>
 
             {session.request.method === "POST" && (
                 <textarea 
-                    className="w-full border rounded px-3 py-2 bg-white text-gray-800 resize-y h-32"
+                    className="w-full bg-active border border-border rounded px-3 py-2 text-sm text-primary font-mono
+                     placeholder:text-muted resize-y h-32 focus:outline-none focus:border-accent"
                     value={session.request.body} 
                     onChange={(e) => {
                         setSession(prev => ({
@@ -153,38 +162,43 @@ function RequestForm({ onSend, history, onSelectHistory, selectedHistory }) {
             )}
 
             <div className="space-y-2">
-                <h3 className="font-semibold text-gray-700">Request History</h3>
+                <div className="flex items-center">
+                    <span className="text-xs font-mono tracking-widest text-labels uppercase">Request History</span>
+                </div>
                 
                 {history.length === 0 ? (
-                    <p className="text-sm text-gray-500">No requests yet</p>
+                    <p className="text-sm text-muted">No requests yet</p>
                 ) : (
-                    <div className="max-h-40 overflow-y-auto border rounded bg-gray-50">
-                        {history.map((item) => (
-                            <div 
-                                key={item.timestamp}
-                                onClick={() => onSelectHistory(item)}
-                                className={`flex items-center gap-2 px-3 py-2 text-sm cursor-pointer border-b last:border-b-0
-                                    ${selectedHistory === item.timestamp ? "bg-blue-100" : "hover:bg-gray-100"}`}
-                                >
-                                <span className="font-semibold text-gray-700 w-12">
-                                    {item.request.method}
-                                </span>
+                    <div className="overlow-hidden">
+                        <div className={`${history.length > 5 ? "max-h-48 overflow-y-auto": ""}`}>
+                            {history.map((item) => (
+                                <div 
+                                    key={item.timestamp}
+                                    onClick={() => onSelectHistory(item)}
+                                    className={`flex items-center gap-3 px-3 py-2 text-sm cursor-pointer rounded-lg transition-colors 
+                                        ${selectedHistory === item.timestamp ? "border border-border bg-active"
+                                                                             : "border border-transparent hover:bg-active"}`}
+                                    >
+                                    <span className="font-mono text-xs text-accent bg-accentSoft px-1.5 py-0.5 rounded w-10 text-center">
+                                        {item.request.method}
+                                    </span>
 
-                                <span className="flex-1 truncate text-gray-600">
-                                    {item.request.url}
-                                </span>
+                                    <span className="flex-1 truncate text-input font-mono text-xs">
+                                        {item.request.url}
+                                    </span>
 
-                                <span className={`font-medium ${
-                                    item.response.status >= 200 && item.response.status < 300 ? "text-green-600" : "text-red-600"
-                                }`}>
-                                    {item.response.status}
-                                </span>
+                                    <span className={`font-mono text-xs font-semibold ${
+                                        item.response.status >= 200 && item.response.status < 300 ? "text-success" : "text-red-400"
+                                    }`}>
+                                        {item.response.status}
+                                    </span>
 
-                                <span className="text-gray-500">
-                                    • {item.response.time}ms
-                                </span>
-                            </div>
-                        ))}
+                                    <span className="text-muted font-mono text-xs">
+                                        • {item.response.time}ms
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 )}
             </div>

@@ -136,24 +136,39 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-5xl mx-auto space-y-6">
-        <h1 className="text-2xl font-bold text-gray-800">
-          HTTP Request Inspector
-        </h1>
+    <div 
+      className="min-h-screen p-6"
+      style={{
+        backgroundColor: "#080912",
+        backgroundImage: `
+          radial-gradient(ellipse at 110% -10%, rgba(80, 70, 180, 0.08) 0%, transparent 65%),
+          radial-gradient(circle at 50% 50%, rgba(255,255,255,0.0035) 1px, transparent 1px)
+        `,
+        backgroundSize: "auto, 24px 24px",
+      }}
+    >
+      <div className="max-w-4xl mx-auto">
+          <div className="flex items-center justify-between px-2 py-2">
+            <h1 className="text-xl font-sans font-semibold text-primary">
+              HTTP Request Inspector
+            </h1>
+            <span className="text-xs font-mono text-accent border border-accentSoft px-2 py-1 rounded-full">
+              v1.0
+            </span>
+          </div>
 
-        <RequestForm 
-          onSend={handleSend}
-          history={history}
-          onSelectHistory={populateRequest}
-          selectedHistory={selectedHistory}
-        />
+          <RequestForm 
+            onSend={handleSend}
+            history={history}
+            onSelectHistory={populateRequest}
+            selectedHistory={selectedHistory}
+          />
 
-        <ResponseViewer 
-          loading={loading}
-          error={error}
-        />
-      </div>
+          <ResponseViewer 
+            loading={loading}
+            error={error}
+          />
+        </div>
     </div>
   );
 }

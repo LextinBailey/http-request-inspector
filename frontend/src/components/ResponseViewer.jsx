@@ -51,47 +51,65 @@ function ResponseViewer({ loading, error }) {
     const isSuccess = session.response.status >= 200 && session.response.status < 300;
 
    return (
-    <div className="bg-white border rounded-lg shadow-sm p-4 space-y-4">
-        <div className="flex justify-between items-center">
-            <div className="text-sm text-gray-600">
-                {session.response.time} ms
+    <div className="border border-border rounded-lg overflow-hidden mt-3">
+
+        {/* Status Bar */}
+        <div className="flex items-center justify-between px-4 py-3">
+            <div className="flex item-center gap-2">
+                <span className="font-mono text-xs text-muted bg-active border border-border rounded px-2 py-1">
+                    {session.response.time} ms
+                </span>
+
+                <button
+                    className={`text-xs px-3 py-1 rounded font-mono transition-colors ${
+                        activeTab === "body" ? "bg-accentSoft text-accent border border-accent"
+                                             : "bg-active text-muted border border-border hover:text-primary"}`}
+                    onClick={() => setActiveTab("body")}>
+                    Body
+                </button>
+
+                <button
+                    className={`text-xs px-3 py-1 rounded font-mono transition-colors ${
+                        activeTab === "headers" ? "bg-accentSoft text-accent border border-accent"
+                                                 : "bg-active text-muted border border-border hover:text-primary"}`}
+                    onClick={() => setActiveTab("headers")}>
+                    Headers
+                </button>
             </div>
 
-            <div className={`font-semibold ${isSuccess ? "text-green-600" : "text-red-600"}`}>
+            <div className="flex items-center gap-2">
+                <span className={`font-mono text-sm font-semibold ${isSuccess ? "text-success" : "text-red-400"}`}>
                     {session.response.status} {isSuccess ? "OK" : ""}
+                </span>
+
+                <button 
+                    className="text-xs font-mono bg-transparent border border-border text-primary px-3 py-1 rounded hover:text-primary
+                     hover:border-accent transition-colors"
+                    onClick={handleCopy}>
+                        {copied ? "✓ Copied" : "Copy"}
+                </button>
             </div>
         </div>
 
-        <div className="flex justify-center space-x-4">
-            <button
-                className={`text-sm px-3 py-1 rounded ${
-                    activeTab === "body" ? "text-white bg-gray-700 hover:bg-gray-600" : "bg-gray-200 hover:bg-gray-300"}`}
-                onClick={() => setActiveTab("body")}>
-                Body
-            </button>
-            <button
-                className={`text-sm px-3 py-1 rounded ${
-                    activeTab === "headers" ? "text-white bg-gray-700 hover:bg-gray-600" : "bg-gray-200 hover:bg-gray-300"}`}
-                onClick={() => setActiveTab("headers")}>
-                Headers
-            </button>
+        {/* Divider */}
+        <div className="border-t border-border" />
+
+        {/* Tab Content */}
+        <div className="bg-panel p-4 min-h-40">
+            {activeTab === "headers" && (
+                <HeadersTab
+                    headers={session.response.headers}
+                />
+            )}
+            
+            {activeTab === "body" && (
+                <BodyTab
+                    formattedBody={formattedBody}
+                />
+            )}
         </div>
-        
-        {activeTab === "headers" && (
-            <HeadersTab
-                headers={session.response.headers}
-            />
-        )}
-        
-        {activeTab === "body" && (
-            <BodyTab
-                formattedBody={formattedBody}
-                copied={copied}
-                onCopy={handleCopy}
-            />
-        )}
     </div>
-   )
+   );
 }
 
 export default ResponseViewer;

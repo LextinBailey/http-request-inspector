@@ -253,16 +253,17 @@ A day-by-day log of development decisions, features, and design evolution.
     - Persisted request + response data
 - Improved backend architecture to full-stack structure
     - Request flow now persists data end-to-end
-    - Frontend -> backend -> HTTP execution -> database storage
+    - Frontend → backend → HTTP execution → database storage
 - Added `GET /request` route for retrieving stored requests
-    - `POST /requests` -> saves request
-    - `GET /requests` -> retrieves history
+    - `POST /requests` → saves request
+    - `GET /requests` → retrieves history
 
-## Day 15 (May 2, 2026): Request History Reflects Persisted Data
+## Day 15 (May 2, 2026): Request History Reflects Persisted Data, Revamped UI/UX
 
 - Refactored request history to use backend API (`GET /requests`)
     - No longer uses `localStorage`
     - Implemented data normalization layer to align backend response with frontend state shape
-    - POST -> persist to PostgreSQL -> GET -> normalize -> render in UI
+    - POST → persist to PostgreSQL → GET → normalize → render in UI
 - Added `.env` folder to store `DATABASE_URL`
     - Example shown in `.env.example`
+- Improved UI/UX
