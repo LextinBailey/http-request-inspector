@@ -1,52 +1,113 @@
 # HTTP Request Inspector
 
+![POST](./screenshots/post.png)
+
 A Postman-like tool that allows users to create HTTP requests and inspect responses.
 
 ## 📝 Overview
 
 HTTP Request Inspector is a full-stack application that allows users to build HTTP requests and inspect real responses from external APIs.
 
-This project was built to strengthen my understanding of:
+It simulates the core functionality of tools like Postman by enabling users to configure requests, send them through a backend proxy, and inspect structured responses.
+
+This project demonstrates:
 - React component architecture
 - State management and data flow
 - Client-server interaction patterns
 - Designing and consuming REST APIs
 - Persisting data with PostgreSQL
 
+## 📸 Screenshots
+
+### Main Interface
+
+Build and configure HTTP requests with a clean, developer-focused UI.
+
+![Main UI](./screenshots/post.png)
+
+### Successful Request
+
+Inspect response status, headers, and body in real time.
+
+![GET](./screenshots/get.png)
+
+### Error Handling (Invalid JSON)
+
+Client-side validation prevents malformed requests before sending.
+
+![Error](./screenshots/error.png)
+
+### Failed Request (404)
+
+Gracefully handles server errors and displays meaningful feedback.
+
+![404](./screenshots/404.png)
+
+
 ## 💻 Tech Stack
 
 - Frontend: React (Vite)
-- Backend: Node.js + Express
+- Backend: Node.js + Express (REST API)
 - Database: PostgreSQL
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/LextinBailey/http-request-inspector.git
+cd http-request-inspector
+```
+
+### 2. Setup Backend
+
+```bash
+cd backend
+npm install
+cp .env.example .env
+npm run dev
+```
+
+### 3. Setup Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### This App will be Available at:
+
+- Frontend: http://localhost:5173
+- Backend: http://localhost:3000
 
 ## 🔄 Data Flow
 
-Client → POST /requests → Backend executes request → Saves to PostgreSQL
-       → GET /requests → Returns persisted history → Frontend renders
+Client → POST /requests 
+→ Backend executes request 
+→ Saves to PostgreSQL
+       
+Client → GET /requests
+→ Returns persisted history
+→ Frontend renders
 
 ## 🔥 Features
 
 ### 🛠️ Core Features
 
-- [x] Controlled form inputs (URL + method)
-- [x] Component-based UI structure
-- [x] Loading state handling
-- [x] Error state handling
-- [x] Conditional rendering based on state
-- [x] Dynamic rendering of response data (headers, body, status)
-- [x] Parses JSON responses from backend
-- [x] Backend receives request configuration (URL + method)
-- [x] POST `/requests` endpoint
-- [x] GET `/requests` endpoint
-- [x] Performs HTTP request (`fetch`)
-- [x] Cross-origin requests (`CORS`)
-- [x] Request history persisted in PostgreSQL
+- [x] Build HTTP requests (GET, POST)
+- [x] Dynamic custom headers
+- [x] Request body support (POST)
+- [x] Response inspection (status, headers, body)
+- [x] Loading and error state handling
+- [x] Copy response to clipboard
+
+### 🧠 Data & Persistence
+
+- [x] Requests persisted in PostgreSQL
 - [x] Fetch history via GET `/requests`
-- [x] History updates after each request (DB as source of truth)
-- [x] Dynamic custom request headers
-- [x] POST Support
-- [x] Tabs (Body | Headers)
-- [x] Copy response
+- [x] History rehydration (restore past requests)
+- [x] Database as single source of truth
 
 ### 👨‍💻 Developer Experience
 
@@ -54,7 +115,7 @@ Client → POST /requests → Backend executes request → Saves to PostgreSQL
 
 ## ⚙️ How It Works Internally
 
-⚠️ This section is optional and provides a deeper look into the internal design.
+⚠️ This section is optional and provides a deeper look into the architecture and design decisions behind the application.
 
 ### 1. Component Architecture
 
@@ -231,6 +292,11 @@ http-request-inspector/
 │   │   │   ├── ResponseViewer.jsx
 │   │   │   ├── BodyTab.jsx
 │   │   │   └── HeadersTab.jsx
+├── screenshots/
+│   ├── 404.png
+│   ├── error.png
+│   ├── get.png
+│   └── post.png
 ├── progress-log.md
 └── README.md
 ```

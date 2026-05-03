@@ -2,6 +2,11 @@
 
 A day-by-day log of development decisions, features, and design evolution.
 
+Focus is placed on:
+- How features evolved
+- Architectural decisions
+- Lessons learned
+
 ## Day 1 (Apr 18, 2026): GitHub Repo, Initial Setup
 
 - Created GitHub repository
@@ -42,11 +47,11 @@ A day-by-day log of development decisions, features, and design evolution.
 
 ## Day 5 (Apr 22, 2026): Backend Endpoint, Connecting Frontend -> Backend, CORS, Frontend Error Handling, Invalid URL, Backend Logging, UI Improvements
 
-- Implemented `POST /request` endpoint in backend
+- Implemented `POST /requests` endpoint in backend
     - Accepts `{ url, method }` from frontend
     - Perfoms HTTP request using `fetch`
     - Returns structured JSON
-- Connected frontend to backend using `fetch("http://localhost:3000/request")`
+- Connected frontend to backend using `fetch("http://localhost:3000/requests")`
     - Sends request configuration (URL + method)
     - Awaits response
     - Parses JSON
@@ -63,7 +68,7 @@ A day-by-day log of development decisions, features, and design evolution.
     - Wrapped external `fetch` in `try/catch`
     - Prevents server crashes from invalid URLs or failed requests
 - Added backend logging
-    - Incoming requests (`url`, `mehthod`)
+    - Incoming requests (`url`, `method`)
     - Fetch errors
 - Learned to handle mismatched frontend/backed data (e.g. missing headers causing UI crash)
 - Added simple UI improvements
@@ -129,7 +134,7 @@ A day-by-day log of development decisions, features, and design evolution.
 - Added `Remove` button to each header row
 - Converted `headers` array to key-value object (`headersMap`)
     - Filtered out empty header keys to prevent invalid requests
-- Sent `headersMap` in the POST `/request` payload
+- Sent `headersMap` in the POST `/requests` payload
     - Passed directly into the `fetch` call
 
 ## Day 10 (Apr 27, 2026): POST Support, Tailwind CSS Setup
@@ -138,7 +143,7 @@ A day-by-day log of development decisions, features, and design evolution.
 - Implemented JSON body validation
     - If `Content-Type: application/json` is present, the body is validated
     - Invalid JSON prevents the request
-- Included `body` in the POST `/request` payload
+- Included `body` in the POST `/requests` payload
 - Added backend `method` checking
     - If the method is `POST`, body is attached to the outgoing `fetch`
 - Installed Tailwind v3
@@ -222,10 +227,8 @@ A day-by-day log of development decisions, features, and design evolution.
     - `App` owns data
     - `RequestForm` owns how that data is edited
     - `session` = single source of truth
-- Fixed bugs in `RequestForm`
-    - `&{` replaced with `${`
-    - Missing "
-    - `item.status` replaced with `item.response.status`
+- Fixed data consistency issues in `RequestForm`
+    - Corrected reponse shape mismatch (`item.status` → `item.response.status`)
 - Learned when something should work but doesn't, always try tooling/caching before rewriting logic
 - Introduced Context API
     - Moved `session` into a global provider
@@ -235,11 +238,11 @@ A day-by-day log of development decisions, features, and design evolution.
 
 - Extracted HTTP logic into service layer (`httpService`)
     - Moved `fetch` + timing logic into `executeRequest`
-    - Simplified `/request` route to use service
+    - Simplified `/requests` route to use service
 - Separated business logic from routing
 - Extracted request/response logic into controller layer (`requestController`)
     - Moved destructing request, building `options`, calling `executeRequest`, and returning `res.json(response)` into `handleRequest`
-    - Replaced route with `app.post('/request', handleRequest);`
+    - Replaced route with `app.post('/requests', handleRequest);`
 - Separated concerns
     - `server.js` = routing only
     - `requestController.js` = request/response handling
@@ -254,7 +257,7 @@ A day-by-day log of development decisions, features, and design evolution.
 - Improved backend architecture to full-stack structure
     - Request flow now persists data end-to-end
     - Frontend → backend → HTTP execution → database storage
-- Added `GET /request` route for retrieving stored requests
+- Added `GET /requests` route for retrieving stored requests
     - `POST /requests` → saves request
     - `GET /requests` → retrieves history
 
@@ -264,7 +267,7 @@ A day-by-day log of development decisions, features, and design evolution.
     - No longer uses `localStorage`
     - Implemented data normalization layer to align backend response with frontend state shape
     - POST → persist to PostgreSQL → GET → normalize → render in UI
-- Added `.env` folder to store `DATABASE_URL`
+- Added `.env` file to store `DATABASE_URL`
     - Example shown in `.env.example`
 - Improved UI/UX
 - Added `enter` key functionality
@@ -277,3 +280,11 @@ A day-by-day log of development decisions, features, and design evolution.
     - Added dedicated arrow space
 - Fixed `loading`, `error`, `!session.response` UI alignment
     - Stored `content` based on state
+
+## 🧠 Key Takeaways
+
+- State should have a single source of truth to avoid inconsistencies
+- Frontend and backend data shapes often differ and require normalization
+- Separating concerns (routes, controllers, services) improve scalability and maintainability
+- UI issues are often layout constraints, not data problems
+- Building real-world tools requires handling both success and failure cases
