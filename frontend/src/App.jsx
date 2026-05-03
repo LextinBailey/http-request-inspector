@@ -14,13 +14,17 @@ function App() {
   
   const { session, setSession } = useContext(SessionContext);
 
+  const API_BASE = import.meta.env.VITE_API_URL;
+  
+  console.log("API_BASE:", API_BASE);
+
   useEffect(() => {
     fetchHistory();
   }, []);
 
   const fetchHistory = async () => {
     try {
-      const res = await fetch("http://localhost:3000/requests");
+      const res = await fetch(`${API_BASE}/requests`);
 
       if (!res.ok) {
         throw new Error(`HTTP error: ${res.status}`);
@@ -82,7 +86,7 @@ function App() {
     }
 
     try {
-      const res = await fetch("http://localhost:3000/requests", {
+      const res = await fetch(`${API_BASE}/requests`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

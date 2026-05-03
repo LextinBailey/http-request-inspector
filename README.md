@@ -1,5 +1,7 @@
 # HTTP Request Inspector
 
+A developer tool inspired by Postman, built to understand full-stack request lifecycles, state management, and API design patterns.
+
 ![POST](./screenshots/post.png)
 
 A Postman-like tool that allows users to create HTTP requests and inspect responses.
@@ -16,6 +18,24 @@ This project demonstrates:
 - Client-server interaction patterns
 - Designing and consuming REST APIs
 - Persisting data with PostgreSQL
+
+## 🚀 Live Demo
+
+- Frontend: https://http-request-inspector.netlify.app
+- Backend API: https://http-request-inspector-backend.onrender.com
+
+## 🧪 How to Use (Quick Example)
+
+1. Enter a URL (e.g. https://jsonplaceholder.typicode.com/posts)
+2. Choose a method (GET or POST)
+3. Click "Send"
+4. Inspect the response + headers + status
+
+## 💻 Tech Stack
+
+- Frontend: React (Vite)
+- Backend: Node.js + Express (REST API)
+- Database: PostgreSQL
 
 ## 📸 Screenshots
 
@@ -43,14 +63,7 @@ Gracefully handles server errors and displays meaningful feedback.
 
 ![404](./screenshots/404.png)
 
-
-## 💻 Tech Stack
-
-- Frontend: React (Vite)
-- Backend: Node.js + Express (REST API)
-- Database: PostgreSQL
-
-## 🚀 Getting Started
+## 🛠️ Getting Started (Local Development)
 
 ### 1. Clone the Repository
 
@@ -80,6 +93,14 @@ npm run dev
 
 - Frontend: http://localhost:5173
 - Backend: http://localhost:3000
+
+### Environment Variables
+
+Frontend `.env`:
+- VITE_API_URL=http://localhost:3000
+
+Backend `.env`:
+- DATABASE_URL=your_database_url_here
 
 ## 🔄 Data Flow
 
@@ -285,6 +306,7 @@ http-request-inspector/
 │   │   │   ├── httpService.js
 │   │   └── server.js
 ├── frontend/
+│   ├── .env.example
 │   ├── src/
 │   │   ├── App.jsx
 │   │   └── components/
@@ -311,5 +333,4 @@ Feature Complete (Core Functionality)
 
 Currently focusing on:
 - UI/UX polish
-- Deployment (frontend + backend)
 - Potential enhancements (auth, collections)

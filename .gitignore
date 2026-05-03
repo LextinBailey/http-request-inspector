@@ -7,6 +7,8 @@ build/
 
 # environment variables
 .env
+.env.local
+.end.*.local
 
 # logs
 npm-debug.log*

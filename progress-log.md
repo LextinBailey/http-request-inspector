@@ -274,12 +274,15 @@ Focus is placed on:
     - Wrapped input field in `form`
     - Handles `event.preventDefault()` to avoid page refreshes
 
-## Day 16 (May 3, 2026): UI Fix, UI State Alignment Fix
+## Day 16 (May 3, 2026): UI Fix, UI State Alignment Fix, Render Backend + Postgres, Netlify
 
 - Fixed `POST` method selection collision with custom arrow
     - Added dedicated arrow space
 - Fixed `loading`, `error`, `!session.response` UI alignment
     - Stored `content` based on state
+- Deployed Render backend + connected Postgres database
+- Rewired frontend fetch call to Render backend
+- Setup Netlify and connected to Render backend
 
 ## 🧠 Key Takeaways
 
