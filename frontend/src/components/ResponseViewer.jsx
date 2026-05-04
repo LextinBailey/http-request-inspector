@@ -36,7 +36,24 @@ function ResponseViewer({ loading, error }) {
             await navigator.clipboard.writeText(formattedBody);
             setCopied(true);
         } catch (err) {
-            console.error("Failed to copy:", err);
+            // Fallback for mobile
+            try {
+                const textarea = document.createElement("textarea");
+                textarea.value = formattedBody;
+                textarea.style.position = "fixed";
+                textarea.style.opacity = "0";
+
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
+
+                document.execCommand("copy");
+
+                document.body.removeChild(textarea);
+                setCopied(true);
+            } catch (fallbackErr) {
+                console.error("Copy failed", fallbackErr);
+            }
         }
     }
 

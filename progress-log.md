@@ -284,6 +284,15 @@ Focus is placed on:
 - Rewired frontend fetch call to Render backend
 - Setup Netlify and connected to Render backend
 
+## Day 17 (May 4, 2026): Mobile Bugs
+
+- Fixed custom headers layout on mobile screens
+    - Stacks vertically by default
+    - Switches back to row on larger screens
+- Fixed copy button on mobile
+    - Some mobile browsers block (`navigator.clipboard`)
+    - Implemented (`document.execCommand("copy")`)
+
 ## 🧠 Key Takeaways
 
 - State should have a single source of truth to avoid inconsistencies

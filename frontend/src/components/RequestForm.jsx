@@ -119,7 +119,7 @@ function RequestForm({ onSend, history, onSelectHistory, selectedHistory }) {
                 
                 <div className={`space-y-2 ${session.request.headers.length > 5 ? "max-h-48 overflow-y-auto pr-1" : ""}`}>
                     {(session.request.headers || []).map((header, index) => (
-                        <div key={index} className="flex gap-2 items-center">
+                        <div key={index} className="flex flex-col sm:flex-row gap-2">
                             <input
                                 className="flex-1 bg-active border border-border rounded px-3 py-1.5 text-sm text-primary
                                  placeholder:text-muted font-mono focus:outline-none focus:border-accent"
@@ -138,7 +138,7 @@ function RequestForm({ onSend, history, onSelectHistory, selectedHistory }) {
 
                             <button 
                                 className="text-xs border border-border text-muted px-2 py-1.5 rounded hover:border-red-500
-                                 hover:text-red-400 transition-colors"
+                                 hover:text-red-400 transition-colors w-full sm:w-auto"
                                 onClick={() => handleRemoveHeader(index)}
                             >
                                 Remove
