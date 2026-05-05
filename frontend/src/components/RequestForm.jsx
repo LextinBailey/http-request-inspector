@@ -55,52 +55,55 @@ function RequestForm({ onSend, history, onSelectHistory, selectedHistory }) {
     return (
         <div className="px-2 pb-4 space-y-3">
             <form 
-                className="flex gap-2 items-center border-b border-border pb-4"
+                className="flex flex-col sm:flex-row gap-2 sm:items-center border-b border-border pb-4"
                 onSubmit={(e) => {
                     e.preventDefault();
                     onSend();
                 }}
             >
-                <div className="relative">
-                    <select
-                        className="appearance-none flex items-center bg-transparent font-mono text-sm text-primary border border-border rounded pl-2 pr-4 cursor-pointer h-[38px]"
-                        value={session.request.method}
+                <div className="flex gap-2 w-full">
+                    <div className="relative">
+                        <select
+                            className="appearance-none flex items-center bg-transparent font-mono text-sm text-primary border border-border rounded pl-2 pr-4 cursor-pointer h-[38px]"
+                            value={session.request.method}
+                            onChange={(e) => {
+                                setSession(prev => ({
+                                    ...prev,
+                                    request: {
+                                        ...prev.request,
+                                        method: e.target.value
+                                    }
+                                }));
+                            }}
+                        >
+                            <option value="GET">GET</option>
+                            <option value="POST">POST</option>
+                        </select>
+                        <span className="flex items-center justify-center leading-none pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-primary text-xs">
+                            ▾
+                        </span>
+                    </div>
+
+                    <input 
+                        className="flex-1 bg-active font-mono text-sm text-primary border border-border rounded px-3 py-2
+                        h-[38px] placeholder:text-muted focus:outline-none focus:border-accent"
+                        placeholder="https://api.example.com"
+                        value={session.request.url}
                         onChange={(e) => {
                             setSession(prev => ({
                                 ...prev,
                                 request: {
                                     ...prev.request,
-                                    method: e.target.value
+                                    url: e.target.value
                                 }
                             }));
                         }}
-                    >
-                        <option value="GET">GET</option>
-                        <option value="POST">POST</option>
-                    </select>
-                    <span className="flex items-center justify-center leading-none pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-primary text-xs">
-                        ▾
-                    </span>
+                    />
                 </div>
-
-                <input 
-                    className="flex-1 bg-active font-mono text-sm text-primary border border-border rounded px-3 py-2
-                     h-[38px] placeholder:text-muted focus:outline-none focus:border-accent"
-                    placeholder="https://api.example.com"
-                    value={session.request.url}
-                    onChange={(e) => {
-                        setSession(prev => ({
-                            ...prev,
-                            request: {
-                                ...prev.request,
-                                url: e.target.value
-                            }
-                        }));
-                    }}
-                />
+                
                 
                 <button 
-                    className="flex items-center justify-center bg-transparent text-primary border border-border rounded px-4 h-[38px] text-sm hover:bg-accentSoft hover:border-accent transition-colors"
+                    className="w-full sm:w-auto flex items-center justify-center bg-transparent text-primary border border-border rounded px-4 h-[38px] text-sm hover:bg-accentSoft hover:border-accent transition-colors"
                     type="submit">
                         Send
                 </button>

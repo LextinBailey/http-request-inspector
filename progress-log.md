@@ -293,6 +293,13 @@ Focus is placed on:
     - Some mobile browsers block (`navigator.clipboard`)
     - Implemented (`document.execCommand("copy")`)
 
+## Day 18 (May 5, 2026): Fix UI Viewport
+
+- Adjusted `#root` in `index.css` to fill entire viewport
+- Reworked request bar on mobile
+    - Method + input = same row
+    - Send button below
+
 ## 🧠 Key Takeaways
 
 - State should have a single source of truth to avoid inconsistencies

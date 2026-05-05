@@ -139,7 +139,7 @@ function App() {
 
   return (
     <div 
-      className="min-h-screen p-6"
+      className="min-h-screen w-full p-6"
       style={{
         backgroundColor: "#080912",
         backgroundImage: `
@@ -149,7 +149,7 @@ function App() {
         backgroundSize: "auto, 24px 24px",
       }}
     >
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between px-2 py-2">
             <h1 className="text-xl font-sans font-semibold text-primary">
               HTTP Request Inspector
