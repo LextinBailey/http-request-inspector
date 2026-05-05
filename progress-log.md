@@ -299,6 +299,7 @@ Focus is placed on:
 - Reworked request bar on mobile
     - Method + input = same row
     - Send button below
+- Adjusted reponse header for mobile
 
 ## 🧠 Key Takeaways
 

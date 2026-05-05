@@ -72,41 +72,48 @@ function ResponseViewer({ loading, error }) {
         content = (
             <>
                 {/* Status Bar */}
-                <div className="flex items-center justify-between px-4 py-3">
-                    <div className="flex items-center gap-2">
+                <div className="flex flex-col gap-2 px-4 py-3">
+
+                    {/* Row 1: time + status */}
+                    <div className="flex items-center justify-between">
                         <span className="font-mono text-xs text-muted bg-active border border-border rounded px-2 py-1">
                             {session.response.time} ms
                         </span>
 
-                        <button
-                            className={`text-xs px-3 py-1 rounded font-mono transition-colors ${
-                                activeTab === "body" ? "bg-accentSoft text-accent border border-accent"
-                                                    : "bg-active text-muted border border-border hover:text-primary"}`}
-                            onClick={() => setActiveTab("body")}>
-                            Body
-                        </button>
-
-                        <button
-                            className={`text-xs px-3 py-1 rounded font-mono transition-colors ${
-                                activeTab === "headers" ? "bg-accentSoft text-accent border border-accent"
-                                                        : "bg-active text-muted border border-border hover:text-primary"}`}
-                            onClick={() => setActiveTab("headers")}>
-                            Headers
-                        </button>
-                    </div>
-
-                    <div className="flex items-center gap-2">
                         <span className={`font-mono text-sm font-semibold ${isSuccess ? "text-success" : "text-red-400"}`}>
                             {session.response.status} {isSuccess ? "OK" : ""}
-                        </span>
+                        </span> 
+                    </div>
+
+                    {/* Row 2: tabs + copy */}
+                    <div className="flex items-center justify-between">
+                        <div className="flex gap-2">
+                            <button
+                                className={`text-xs px-3 py-1 rounded font-mono transition-colors ${
+                                    activeTab === "body" ? "bg-accentSoft text-accent border border-accent"
+                                                         : "bg-active text-muted border border-border hover:text-primary"}`}
+                                onClick={() => setActiveTab("body")}
+                            >
+                                Body
+                            </button>
+
+                            <button
+                                className={`text-xs px-3 py-1 rounded font-mono transition-colors ${
+                                    activeTab === "headers" ? "bg-accentSoft text-accent border border-accent"
+                                                            : "bg-active text-muted border border-border hover:text-primary"}`}
+                                onClick={() => setActiveTab("headers")}
+                            >
+                                Headers
+                            </button>
+                        </div>
 
                         <button 
                             className="text-xs font-mono bg-transparent border border-border text-primary px-3 py-1 rounded hover:text-primary
-                            hover:border-accent transition-colors"
+                             hover:border-accent transition-colors"
                             onClick={handleCopy}>
                                 {copied ? "✓ Copied" : "Copy"}
                         </button>
-                    </div>
+                    </div> 
                 </div>
 
                 {/* Divider */}
